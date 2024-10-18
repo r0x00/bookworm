@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-class Dictionary {
+class DictionaryServices {
     static async translation (req, res, next) {
         try {
             const { query, languageFrom, languageTo } = req.query;
@@ -33,4 +33,4 @@ class Dictionary {
     };
 }; 
 
-module.exports = Dictionary;
+module.exports = DictionaryServices;

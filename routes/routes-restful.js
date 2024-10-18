@@ -1,14 +1,66 @@
 const express = require('express');
 const _ = require('lodash');
-const Dictionary = require('../api/services/Dictionary');
+const DictionaryServices = require('../api/services/DictionaryServices');
+const BookServices = require('../api/services/BookServices');
+const ChapterService = require('../api/services/ChapterService');
+
 const router = express.Router();
 
 const routes = {};
 
-routes.general = {
+routes.dictionary = {
     "get /dictionary": {
-        services: Dictionary,
+        services: DictionaryServices,
         method: "translation"
+    },
+};
+
+routes.book = {
+    "get /book": {
+        services: BookServices,
+        method: "load"
+    },
+
+    "get /book/:id": {
+        services: BookServices,
+        method: "show"
+    },
+
+    "post /book": {
+        services: BookServices,
+        method: "create"
+    },
+
+    "patch /book/:id": {
+        services: BookServices,
+        method: "update"
+    },
+
+    "delete /book": {
+        services: BookServices,
+        method: "delete"
+    },
+};
+
+routes.chapter = {
+    "get /chapter/:id": {
+        services: ChapterService,
+        method: "show"
+    },
+
+    "post /chapter": {
+        services: ChapterService,
+        method: "create"
+    },
+
+    "patch /chapter/:id": {
+        services: ChapterService,
+        method: "update"
+    },
+
+    "delete /chapter": {
+        services: ChapterService,
+        method: "delete"
     },
 };
 
