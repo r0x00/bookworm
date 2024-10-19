@@ -31,7 +31,7 @@ routes.book = {
         method: "create"
     },
 
-    "patch /book/:id": {
+    "patch /book": {
         services: BookServices,
         method: "update"
     },
@@ -43,6 +43,11 @@ routes.book = {
 };
 
 routes.chapter = {
+    "get /chapter/book/:book": {
+        services: ChapterService,
+        method: "load"
+    },
+
     "get /chapter/:id": {
         services: ChapterService,
         method: "show"
@@ -53,7 +58,7 @@ routes.chapter = {
         method: "create"
     },
 
-    "patch /chapter/:id": {
+    "patch /chapter": {
         services: ChapterService,
         method: "update"
     },

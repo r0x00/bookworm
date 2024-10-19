@@ -8,22 +8,22 @@ class BookServices {
             res.send(result);
 
         } catch(_error) {
-            res.status(500).send(_error);
+            res.status(500).send(_error.message);
         };
     };
 
     static async show (req, res, next) {
         try {
-            const { id } = req.query;
+            const { id } = req.params;
 
             if(!id) return res.status(400).send("Please add book ID");
 
-            const result = await Book.findOne(id);
+            const result = await Book.findOne({ where: { id: id} });
 
             res.send(result);
 
         } catch(_error) {
-            res.status(500).send(_error);
+            res.status(500).send(_error.message);
         };
     };
 
@@ -42,7 +42,7 @@ class BookServices {
             res.send(result);
 
         } catch(_error) {
-            res.status(500).send(_error);
+            res.status(500).send(_error.message);
         };
     };
 
@@ -54,16 +54,16 @@ class BookServices {
 
             if(!name) return res.status(400).send("Please add book name");
 
-            const result = await Book.update(id, {
+            const result = await Book.update( {
                 name,
                 description,
                 author,
-            });
+            }, { where: { id: id } });
 
             res.send(result);
 
         } catch(_error) {
-            res.status(500).send(_error);
+            res.status(500).send(_error.message);
         };
     };
 
@@ -73,12 +73,12 @@ class BookServices {
 
             if(!id) return res.status(400).send("Please add book ID");
 
-            const result = await Book.delete(id);
+            await Book.destroy({ where: { id: id } });
 
-            res.send(result);
+            res.send();
 
         } catch(_error) {
-            res.status(500).send(_error);
+            res.status(500).send(_error.message);
         };
     };
 };

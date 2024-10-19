@@ -1,0 +1,392 @@
+{
+	"info": {
+		"_postman_id": "faf5bd2b-1d63-4797-bef8-ecbdca86da84",
+		"name": "Bookworm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20863727"
+	},
+	"item": [
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "Load",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const randomNumber = Math.floor(Math.random() * pm.response.json().length);",
+									"",
+									"const id = pm.response.json()[randomNumber].id;",
+									"",
+									"pm.collectionVariables.set(\"book_id\", id);",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/book",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/book/{{book_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"book",
+								"{{book_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"book_id\", pm.response.json().id)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Book\",\n    \"description\": \"Book description\",\n    \"author\": \"Author\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/book",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{book_id}}\",\n    \"name\": \"Book 2\",\n    \"description\": \"Book description 2\",\n    \"author\": \"Author 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/book",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{book_id}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/book",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"book"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chapter",
+			"item": [
+				{
+					"name": "Load",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const randomNumber = Math.floor(Math.random() * pm.response.json().length);",
+									"",
+									"const id = pm.response.json()[randomNumber].id;",
+									"",
+									"pm.collectionVariables.set(\"chapter_id\", id);",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/chapter/book/{{book_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"chapter",
+								"book",
+								"{{book_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/chapter/{{chapter_id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"chapter",
+								"{{chapter_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"chapter_id\", pm.response.json().id)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"book\": \"{{book_id}}\",\n    \"title\": \"Chapter\",\n    \"content\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc pellentesque elementum dui sed varius. Vivamus porta malesuada velit id rhoncus. In hac habitasse platea dictumst. Mauris elit odio, facilisis vel porttitor vel, dictum id nunc. Duis lacus mauris, convallis id sagittis sed, aliquet ullamcorper nisl. Ut dapibus condimentum ex, eleifend facilisis mi scelerisque id. Quisque sed erat diam. Nunc semper malesuada consequat. Donec turpis turpis, bibendum et massa at, sollicitudin tempor magna. Vivamus viverra massa eget tellus mollis commodo. Suspendisse eget dictum quam. Aliquam id eros hendrerit, porta enim nec, mollis odio.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/chapter",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"chapter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{chapter_id}}\",\n    \"title\": \"Chapter 2\",\n    \"content\": \"Sed euismod neque ut sodales rutrum. Mauris vitae leo vel velit lacinia sodales. Nam suscipit ex ante, eu porta nibh efficitur nec. Curabitur lorem nunc, imperdiet non sapien non, semper sagittis tortor. Nunc erat leo, sodales quis posuere in, facilisis sit amet neque. Proin cursus egestas magna quis luctus. Quisque quis aliquam diam.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/chapter",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"chapter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{chapter_id}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/chapter",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"chapter"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dictionary",
+			"item": [
+				{
+					"name": "Translate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/dictionary?query=Hello%20World&languageFrom=en&languageTo=pt-br",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"dictionary"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "Hello%20World"
+								},
+								{
+									"key": "languageFrom",
+									"value": "en"
+								},
+								{
+									"key": "languageTo",
+									"value": "pt-br"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "book_id",
+			"value": ""
+		},
+		{
+			"key": "chapter_id",
+			"value": ""
+		}
+	]
+}

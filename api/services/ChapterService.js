@@ -1,18 +1,39 @@
 const Chapter = require('../methods/Chapter');
+const Book = require('../methods/Book');
 
 class ChapterService {
+    static async load (req, res, next) {
+        try {
+            const { book } = req.params;
+
+            if(!book) return res.status(400).send("Please add book ID");
+
+            const foundBook = await Book.findOne({ where: { id: book } });
+
+            if(!foundBook) return res.status(404).send("Book not found");
+
+            const result = await Chapter.findAll({ where: { book: book } });
+
+            res.send(result)
+
+        } catch(_error) {
+            res.status(500).send(_error.message);
+        };
+    };
+
     static async show (req, res, next) {
         try {
-            const { id } = req.query;
+            const { id } = req.params;
 
             if(!id) return res.status(400).send("Please add chapter ID");
 
-            const result = await Chapter.findOne(id);
+            const result = await Chapter.findOne({  where: { id: id } });
 
             res.send(result);
 
         } catch(_error) {
-            res.status(500).send(_error);
+            console.log(_error)
+            res.status(500).send(_error.message);
         };
     };
 
@@ -35,32 +56,29 @@ class ChapterService {
             res.send(result);
 
         } catch(_error) {
-            res.status(500).send(_error);
+            res.status(500).send(_error.message);
         };
     };
 
     static async update (req, res, next) {
         try {
-            const { id, book, title, content } = req.body;
+            const { id, title, content } = req.body;
 
             if(!id) return res.send(400).send("Please add chapter ID");
-
-            if(!book) return res.status(400).send("Please add book ID");
 
             if(!title) return res.status(400).send("Please add chapter title");
 
             if(!content) return res.status(400).send("Please add content");
 
-            const result = await Chapter.update(id, {
-                book,
+            const result = await Chapter.update({
                 title,
                 content
-            });
+            }, { where: { id: id }});
 
             res.send(result);
 
         } catch(_error) {
-            res.status(500).send(_error);
+            res.status(500).send(_error.message);
         };
     };
 
@@ -70,12 +88,12 @@ class ChapterService {
 
             if(!id) return res.status(400).send("Please add chapter ID");
 
-            const result = await Chapter.delete(id);
+            await Chapter.destroy({ where: { id: id } });
 
-            res.send(result);
+            res.send();
 
         } catch(_error) {
-            res.status(500).send(_error);
+            res.status(500).send(_error.message);
         };
     };
 };

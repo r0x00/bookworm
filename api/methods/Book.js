@@ -23,14 +23,6 @@ const Book = sequelize.define('Book', {
     author: {
         type: DataTypes.STRING
     },
-
-    created: {
-        type: DataTypes.DATE
-    },
-
-    updated: {
-        type: DataTypes.DATE
-    },
 });
 
 
@@ -38,6 +30,8 @@ Book.hasMany(Chapter, {
     foreignKey: 'chapter',
 });
 
-Chapter.belongsTo(Book);
+Chapter.belongsTo(Book, { 
+    foreignKey: 'book',
+});
 
 module.exports = Book;

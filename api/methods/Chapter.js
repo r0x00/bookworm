@@ -15,16 +15,8 @@ const Chapter = sequelize.define('chapter', {
     },
 
     content: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         required: true
-    },
-
-    created: {
-        type: DataTypes.DATE
-    },
-
-    updated: {
-        type: DataTypes.DATE
     },
 });
 

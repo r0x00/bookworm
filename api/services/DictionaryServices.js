@@ -28,7 +28,7 @@ class DictionaryServices {
             res.status(200).send(result);
 
         } catch(_error) {
-            res.status(500).send(_error);
+            res.status(500).send(_error.message);
         };
     };
 }; 
