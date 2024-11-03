@@ -1,0 +1,20 @@
+version: '2'
+services:
+  db:
+    container_name: db
+    image: mysql:9
+    volumes:
+      - "/srv/bookworm/db:/var/lib/mysql"
+      # - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=bJ0MELC&&@wIW@F#GX&HkDTGm#n&fK3n7#4
+      - MYSQL_DATABASE=#i@UP6dS8axcYtSTa##Z@1R@VUPXExsJhv_
+      - MYSQL_USER=bookworm
+      - MYSQL_PASSWORD=#pmDP#Wi@7JtXEhn@GT#_7mrOG#ItFk_#o
+    networks:
+      - bookworm-backend
+
+networks:
+  bookworm-backend:
