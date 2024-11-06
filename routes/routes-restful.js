@@ -2,7 +2,8 @@ const express = require('express');
 const _ = require('lodash');
 const DictionaryServices = require('../api/services/DictionaryServices');
 const BookServices = require('../api/services/BookServices');
-const ChapterService = require('../api/services/ChapterService');
+const ChapterServices = require('../api/services/ChapterServices');
+const AuthServices = require('../api/services/AuthServices');
 
 const router = express.Router();
 
@@ -44,28 +45,40 @@ routes.book = {
 
 routes.chapter = {
     "get /chapter/book/:book": {
-        services: ChapterService,
+        services: ChapterServices,
         method: "load"
     },
 
     "get /chapter/:id": {
-        services: ChapterService,
+        services: ChapterServices,
         method: "show"
     },
 
     "post /chapter": {
-        services: ChapterService,
+        services: ChapterServices,
         method: "create"
     },
 
     "patch /chapter": {
-        services: ChapterService,
+        services: ChapterServices,
         method: "update"
     },
 
     "delete /chapter": {
-        services: ChapterService,
+        services: ChapterServices,
         method: "delete"
+    },
+};
+
+routes.auth = {
+    "post /auth/login": {
+        services: AuthServices,
+        method: "login"
+    },
+
+    "post /auth/logout": {
+        services: AuthServices,
+        method: "logout"
     },
 };
 

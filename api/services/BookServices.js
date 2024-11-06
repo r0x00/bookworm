@@ -20,6 +20,8 @@ class BookServices {
 
             const result = await Book.findOne({ where: { id: id} });
 
+            if(!result) return res.status(400).send("Book not found");
+
             res.send(result);
 
         } catch(_error) {
@@ -29,7 +31,7 @@ class BookServices {
 
     static async create (req, res, next) {
         try {
-            const { name, description, author } = req.body;
+            const { name, description, author, type, wallpaper } = req.body;
 
             if(!name) return res.status(400).send("Please add book name");
 
@@ -37,6 +39,8 @@ class BookServices {
                 name,
                 description,
                 author,
+                type,
+                wallpaper
             });
 
             res.send(result);
@@ -48,7 +52,7 @@ class BookServices {
 
     static async update (req, res, next) {
         try {
-            const { id, name, description, author } = req.body;
+            const { id, name, description, author, type, wallpaper, finished } = req.body;
 
             if(!id) return res.status(400).send("Please add book ID");
 
@@ -58,6 +62,9 @@ class BookServices {
                 name,
                 description,
                 author,
+                type,
+                wallpaper,
+                finished
             }, { where: { id: id } });
 
             res.send(result);

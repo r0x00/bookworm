@@ -14,14 +14,40 @@ const Book = sequelize.define('Book', {
     name: {
         type: DataTypes.STRING,
         required: true,
+        validate: {
+            max: 300
+        }
     },
 
     description: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        validate: {
+            max: 300
+        }
     },
 
     author: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        validate: {
+            max: 300
+        }
+    },
+
+    type: {
+        type: DataTypes.JSON
+    },
+
+    views: {
+        type: DataTypes.INTEGER
+    },
+
+    finished: {
+        type: DataTypes.BOOLEAN,
+
+    },
+
+    wallpaper: {
+        type: DataTypes.BLOB
     },
 });
 

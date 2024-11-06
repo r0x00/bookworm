@@ -1,7 +1,7 @@
 const Chapter = require('../methods/Chapter');
 const Book = require('../methods/Book');
 
-class ChapterService {
+class ChapterServices {
     static async load (req, res, next) {
         try {
             const { book } = req.params;
@@ -29,10 +29,11 @@ class ChapterService {
 
             const result = await Chapter.findOne({  where: { id: id } });
 
+            if(!result) return res.status(400).send("Chapter not found")
+
             res.send(result);
 
         } catch(_error) {
-            console.log(_error)
             res.status(500).send(_error.message);
         };
     };
@@ -98,5 +99,5 @@ class ChapterService {
     };
 };
 
-module.exports = ChapterService;
+module.exports = ChapterServices;
 

@@ -6,7 +6,12 @@ const logger = require('morgan');
 
 const app = express();
 
-const db = require('./db/mysql');
+require('./api/services/passport');
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
+var crypto = require('crypto');
+
 
 app.use(express.static(__dirname + '/views'));
 app.use(express.static('node_modules'))
@@ -42,3 +47,22 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// var express = require('express');
+// var passport = require('passport');
+// var LocalStrategy = require('passport-local');
+// var crypto = require('crypto');
+// var db = require('../db');
