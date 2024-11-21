@@ -10,17 +10,19 @@ const User = sequelize.define("User", {
     
     username: {
         type: DataTypes.STRING,
-        required: true
+        required: true,
+        unique: true,
     }, 
 
     email: {
         type: DataTypes.STRING,
-        required: true
+        required: true,
+        unique: true
     },
 
     permission: {
         type: DataTypes.ENUM,
-        enum: [ 'admin', 'common' ],
+        values: [ 'admin', 'common' ],
         required: true,
         defaultValue: 'common'
     }

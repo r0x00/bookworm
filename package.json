@@ -8,9 +8,11 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
+    "bcrypt": "^5.1.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-session": "^1.18.1",
     "http-errors": "~1.6.3",
     "install": "^0.13.0",
     "jade": "~1.11.0",
@@ -19,10 +21,14 @@
     "mysql2": "^3.11.0",
     "npm": "^10.9.0",
     "passport": "^0.7.0",
+    "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
     "sequelize": "^6.37.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=22.11.0"
   }
 }

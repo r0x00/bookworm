@@ -4,6 +4,7 @@ const DictionaryServices = require('../api/services/DictionaryServices');
 const BookServices = require('../api/services/BookServices');
 const ChapterServices = require('../api/services/ChapterServices');
 const AuthServices = require('../api/services/AuthServices');
+const UserServices = require('../api/services/UserServices');
 
 const router = express.Router();
 
@@ -79,6 +80,33 @@ routes.auth = {
     "post /auth/logout": {
         services: AuthServices,
         method: "logout"
+    },
+};
+
+routes.user = {
+    "get /user": {
+        services: UserServices,
+        method: "load"
+    },
+
+    "get /user/:id": {
+        services: UserServices,
+        method: "show"
+    },
+
+    "post /user": {
+        services: UserServices,
+        method: "create"
+    },
+
+    "patch /user": {
+        services: UserServices,
+        method: "update"
+    },
+
+    "delete /user": {
+        services: UserServices,
+        method: "delete"
     },
 };
 

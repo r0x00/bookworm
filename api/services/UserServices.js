@@ -1,4 +1,5 @@
 const User = require('../methods/User');
+const Passport = require('../methods/Passport');
 
 class UserServices {
     static async load (req, res, next) {
@@ -10,7 +11,6 @@ class UserServices {
         } catch(_error) {
             res.status(500).send(_error.message);
         };
-
     };
 
     static async show(req, res, next) {
@@ -32,14 +32,23 @@ class UserServices {
 
     static async create(req, res, next) {
         try {
-            const { username, email } = req.body;
+            const { username, email, permission, password } = req.body;
 
-            if(!username) return res.status(400).send("Please add user name");
+            if(!username) return res.status(400).send("Please add username");
 
             const result = await User.create({
                 username,
-                email
+                email,
+                permission
             });
+
+            console.log(result)
+
+            await Passport.create({
+                user: result,
+                password: password,
+            });
+
 
             res.send(result);
 
@@ -51,19 +60,21 @@ class UserServices {
 
     static async update(req, res, next) {
         try {
-            const { id, username, email, password } = req.body;
+            const { id, username, email, permission, password } = req.body;
 
             if(!id) return res.status(400).send("Please add user ID");
 
-            if(!username) return res.status(400).send("Please add user name");
+            if(!username) return res.status(400).send("Please add username");
 
 
-            const result = await Book.update( {
+            const result = await User.update( {
                 username,
                 email,
+                permission
             }, { where: { id: id } });
 
             res.send(result);
+  
 
         } catch(_error) {
             res.status(500).send(_error.message);

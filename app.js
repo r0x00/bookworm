@@ -3,18 +3,29 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require('express-session');
+const passport = require('passport');
 
 const app = express();
 
 require('./api/services/passport');
 
-var passport = require('passport');
-var LocalStrategy = require('passport-local');
-var crypto = require('crypto');
-
-
 app.use(express.static(__dirname + '/views'));
 app.use(express.static('node_modules'))
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'kaojsbdjasdjl2iasj',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 60 * 60 * 1000 },
+  // store: new SQLiteStore({ db: 'sessions.db', dir: './var/db' })
+}));
+
+
+app.use(passport.authenticate('session'));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.use(logger('dev'));
@@ -46,23 +57,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+require("./api/services/DefaultServices").admin();
+
 module.exports = app;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var express = require('express');
-// var passport = require('passport');
-// var LocalStrategy = require('passport-local');
-// var crypto = require('crypto');
-// var db = require('../db');
