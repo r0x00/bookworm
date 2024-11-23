@@ -1,23 +1,18 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const BearerStrategy = require('passport-http-bearer');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt
 const strategy = require('./strategy')
 
+require('dotenv').config();
 
-passport.login = function (req, res, next) {
-  // passport.authenticate('local', {
-  //   successRedirect: '/',
-  //   failureRedirect: '/login'
-  // })(req, res, next);
-
-  passport.authenticate('local', { session: false }, function(req, res) {
-    // res.json({ user_id: req.user.userId, name: req.user.username, scope: req.authInfo.scope })
-  })(req, res, next);
+const confs = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.SECRET,
 };
 
-passport.use(new LocalStrategy(strategy.local.verify, strategy.local.create));
-
-passport.use(new BearerStrategy(strategy.bearer.verify, strategy.bearer.create));
+passport.use(new LocalStrategy({ usernameField: 'identifier' }, strategy.local.verify, strategy.local.create));
+passport.use(new JwtStrategy(confs, strategy.jwt.verify, strategy.jwt.create ));
 
 passport.serializeUser(function(user, cb) {
   process.nextTick(function() {

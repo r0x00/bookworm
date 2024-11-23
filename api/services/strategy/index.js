@@ -1,4 +1,4 @@
-const bearer = require('./bearer');
 const local = require('./local');
+const jwt = require('./jwt');
 
-module.exports = { bearer, local };
+module.exports = { local, jwt };

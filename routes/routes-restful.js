@@ -5,8 +5,18 @@ const BookServices = require('../api/services/BookServices');
 const ChapterServices = require('../api/services/ChapterServices');
 const AuthServices = require('../api/services/AuthServices');
 const UserServices = require('../api/services/UserServices');
+const passport = require('../api/services/passport');
 
 const router = express.Router();
+
+  
+router.use((req, res, next) => {
+    if(req.originalUrl != '/api/auth/login') {
+        return passport.authenticate('jwt', { session: false })(req, res, next);
+    };
+  
+    next();
+});
 
 const routes = {};
 
