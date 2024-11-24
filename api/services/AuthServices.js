@@ -28,7 +28,7 @@ class AuthServices {
                 permission: user.permission
             };
           
-            const token = jwt.sign(payload, process.env.SECRET, { expiresIn: '1m' });
+            const token = jwt.sign(payload, process.env.SECRET, { expiresIn: '30m' });
           
             res.status(200).send({ token });
 
