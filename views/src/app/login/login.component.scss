@@ -1,0 +1,38 @@
+.login-container {
+    background-image: url('../../assets/images/wallpaper/login-dark.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #101010;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.login-box {
+    min-width: 530px;
+    padding: 40px;
+    border-radius: 16px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+}
+
+
+.login-link {
+    text-decoration: none;
+    font-size: 18px;
+    color: #D2D2D2;
+    width: 200px;
+    text-align: center;
+    transition: color .25s ease-in-out;
+    cursor: pointer;
+
+    &:focus, 
+    &:hover {
+        color: #999999;
+
+    }
+}

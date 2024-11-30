@@ -10,10 +10,9 @@ const app = express();
 
 require('./api/services/passport');
 
-app.use(express.static(__dirname + '/views'));
 app.use(express.static('node_modules'))
 
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'kaojsbdjasdjl2iasj',
   resave: false,
@@ -32,7 +31,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 const routesRestful = require('./routes/routes-restful');
 const routesViews = require('./routes/routes-view');

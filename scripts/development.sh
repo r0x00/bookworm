@@ -13,4 +13,4 @@ function checkDBContainer {
 
 checkDBContainer
 
-nodemon ./bin/www
+nodemon ./bin/www & npm run dev:frontend 
