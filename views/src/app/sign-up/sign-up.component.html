@@ -1,24 +1,35 @@
 <div class="login-container main-container">
-    <form class="login-box">
+    <form  *ngIf="!userCreated" class="login-box">
         <h2 class="page-title">Sign up</h2>
 
-        <div class="input-container">
-            <label for="identifier" class="input-container--label">username</label>
-            <input id="identifier" type="text">
-        </div>
-
-        <div class="input-container">
-            <label for="email" class="input-container--label">email</label>
-            <input id="email" type="text">
-        </div>
-
-        <div class="input-container">
-            <label for="password" class="input-container--label">password</label>
-            <input id="password" type="text">
-        </div>
-
-        <button class="btn btn-big btn-blue">Create Account</button>
-
+        <form class="form-container" [formGroup]="registerForm" (ngSubmit)="register()">
+            <div class="input-container">
+                <label for="identifier" class="input-container--label">username</label>
+                <input id="identifier" type="text" formControlName="username">
+            </div>
+    
+            <div class="input-container">
+                <label for="email" class="input-container--label">email</label>
+                <input id="email" type="email" formControlName="email">
+            </div>
+    
+            <div class="input-container">
+                <label for="password" class="input-container--label">password</label>
+                <input id="password" type="password" formControlName="password">
+            </div>
+    
+            <button class="btn btn-big btn-blue" type="submit" [disabled]="!registerForm.valid">Create Account</button>
+        </form>
+        
         <a class="login-link" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Do you have an account? Please log in</a>
     </form>
+
+    <div class="box-success" *ngIf="userCreated">
+        <fa-icon [icon]="faCircleCheck" class="fa-6x box-success--icon"></fa-icon>
+        <p class="no-margins box-success--description">User was created with success!</p>
+        <button class="btn btn-big btn-green">
+            Go to login
+            <fa-icon [icon]="faArrowRightLong"></fa-icon>
+        </button>
+    </div>
 </div>

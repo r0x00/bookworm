@@ -13,7 +13,7 @@ const router = express.Router();
 
   
 router.use((req, res, next) => {
-    if(req.originalUrl != '/api/auth/login' && !req.originalUrl.includes('/enviroment/')) {
+    if(req.originalUrl != '/api/auth/login' && !req.originalUrl.includes('/enviroment/') && !req.originalUrl.includes('/user')) {
         return passport.authenticate('jwt', { session: false })(req, res, next);
     };
   

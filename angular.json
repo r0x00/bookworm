@@ -32,7 +32,8 @@
               }
             ],
             "styles": [
-              "views/src/styles.scss"
+              "views/src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },

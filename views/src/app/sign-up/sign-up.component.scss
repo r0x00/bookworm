@@ -1,12 +1,15 @@
 .login-container {
-    background-image: url('../../assets/images/wallpaper/login-dark.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: #101010;
     display: flex;
     align-items: center;
     justify-content: center;
     max-width: unset;
+}
+
+body {
+    background-image: url('../../assets/images/wallpaper/login-dark.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #101010;
 }
 
 
@@ -43,4 +46,40 @@
 
 .page-title {
     margin-top: .5em;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+.box-success {
+    border-radius: var(--border-radius);
+    padding: 50px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.box-success--icon {
+    color: #82ED7D;
+}
+
+.box-success--description {
+    color: #101010;
+    margin: 0;
+    text-align: center;
+    font-size: 30px;
+    line-height: 1.5;
+    letter-spacing: 1px;
+}
+
+.fa-arrow-right-long {
+    margin-left: .5em
 }
