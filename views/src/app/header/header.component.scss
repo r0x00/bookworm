@@ -1,0 +1,25 @@
+.header {
+    position: relative;
+}
+
+.header>div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 21px 1em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    color: #fff;
+    // max-width: 1370px;
+}
+
+.logo {
+    width: 176px;
+    height: 38px;
+    background-image: url('../../assets/images/logo/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}

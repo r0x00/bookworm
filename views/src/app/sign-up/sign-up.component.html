@@ -1,6 +1,6 @@
 <div class="login-container main-container">
     <form class="login-box">
-        <h2 class="page-title">Login</h2>
+        <h2 class="page-title">Sign up</h2>
 
         <div class="input-container">
             <label for="identifier" class="input-container--label">username</label>
@@ -8,12 +8,17 @@
         </div>
 
         <div class="input-container">
+            <label for="email" class="input-container--label">email</label>
+            <input id="email" type="text">
+        </div>
+
+        <div class="input-container">
             <label for="password" class="input-container--label">password</label>
             <input id="password" type="text">
         </div>
 
-        <button class="btn btn-big btn-blue">Access</button>
+        <button class="btn btn-big btn-blue">Create Account</button>
 
-        <a class="login-link" routerLink="/signup" routerLinkActive="active" ariaCurrentWhenActive="page">Dont have a account? create one</a>
+        <a class="login-link" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Do you have an account? Please log in</a>
     </form>
 </div>
