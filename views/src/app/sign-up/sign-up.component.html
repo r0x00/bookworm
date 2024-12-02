@@ -5,17 +5,62 @@
         <form class="form-container" [formGroup]="registerForm" (ngSubmit)="register()">
             <div class="input-container">
                 <label for="identifier" class="input-container--label">username</label>
-                <input id="identifier" type="text" formControlName="username">
+                <input id="identifier" type="text" formControlName="username" focus>
+
+                <div class="input-warning" *ngIf="registerForm.get('username')?.dirty && registerForm.get('username')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+
+                    <div class="input-waning-texts">
+                        <p *ngIf="registerForm.get('username')?.hasError('required')" class="no-margins">A username is required</p>
+                        <p *ngIf="registerForm.get('username')?.hasError('minlength')" class="no-margins">The username must be at least 5 characters long</p>
+                        <p *ngIf="registerForm.get('username')?.hasError('maxlength')" class="no-margins">The username must not be longer than 120 characters</p> 
+                    </div>
+                </div>
             </div>
     
             <div class="input-container">
                 <label for="email" class="input-container--label">email</label>
                 <input id="email" type="email" formControlName="email">
+
+                <div class="input-warning" *ngIf="registerForm.get('email')?.dirty && registerForm.get('email')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+
+                    <div class="input-waning-texts">
+                        <p *ngIf="registerForm.get('email')?.hasError('required')" class="no-margins">A email is required</p>   
+                        <p *ngIf="registerForm.get('email')?.hasError('email')" class="no-margins">Please enter a valid email address</p>
+                        <p *ngIf="registerForm.get('email')?.hasError('minlength')" class="no-margins">The email must be at least 3 characters long</p>    
+                        <p *ngIf="registerForm.get('email')?.hasError('maxlength')" class="no-margins">The email must not be longer than 120 characters</p>    
+                    </div>
+                </div>
             </div>
     
             <div class="input-container">
                 <label for="password" class="input-container--label">password</label>
                 <input id="password" type="password" formControlName="password">
+
+                <div class="input-warning" *ngIf="registerForm.get('password')?.dirty && registerForm.get('password')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+
+                    <div class="input-waning-texts">
+                        <p *ngIf="registerForm.get('password')?.hasError('required')" class="no-margins">A password is required</p>    
+                        <p *ngIf="registerForm.get('password')?.hasError('minlength')" class="no-margins">The password must be at least 8 characters long</p> 
+                        <p *ngIf="registerForm.get('password')?.hasError('maxlength')" class="no-margins">The password must not be longer than 120 characters</p>    
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="confirmPassword" class="input-container--label">confirm your password</label>
+                <input id="confirmPassword" type="password" formControlName="confirmPassword">
+
+                <div class="input-warning" *ngIf="registerForm.get('confirmPassword')?.dirty && (registerForm.get('confirmPassword')?.invalid || registerForm.hasError('valuesDontMatch'))">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+
+                    <div class="input-waning-texts">
+                        <p *ngIf="registerForm.get('confirmPassword')?.hasError('required')" class="no-margins">A confirm password is required</p>    
+                        <p *ngIf="registerForm.hasError('valuesDontMatch')" class="no-margins">Passwords do not match</p> 
+                    </div>
+                </div>
             </div>
     
             <button class="btn btn-big btn-blue" type="submit" [disabled]="!registerForm.valid">Create Account</button>

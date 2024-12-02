@@ -5,8 +5,9 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
-import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightLong, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
+import { matchValuesValidator } from '../validators/value-match.validator';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,18 +19,22 @@ import { CommonModule } from '@angular/common';
 export class SignUpComponent {
   faCircleCheck = faCircleCheck;
   faArrowRightLong = faArrowRightLong;
+  faCircleExclamation = faCircleExclamation;
 
   registerForm = new FormGroup({
     username: new FormControl('', [ Validators.required, Validators.minLength(5), Validators.maxLength(120)]),
     email: new FormControl('', [ Validators.required, Validators.email, Validators.minLength(3), Validators.maxLength(120)]),
     password: new FormControl('', [ Validators.required, Validators.minLength(8), Validators.maxLength(120)]),
+    confirmPassword: new FormControl('', [ Validators.required ]),
+  }, {
+    validators: [ matchValuesValidator('password', 'confirmPassword')]
   });
 
   userCreated = false;
 
-  constructor(private readonly http: HttpClient, private readonly toastr:ToastrService, private readonly router: Router) {};
+  constructor(private readonly http: HttpClient, private readonly toastr:ToastrService, private readonly router: Router, private readonly el: ElementRef) {};
 
-  ngOnInit():void {
+  ngAfterViewInit():void {
     this.focusInput();
   };
 
@@ -57,9 +62,8 @@ export class SignUpComponent {
   };
 
   focusInput(): void {
-    // @ViewChild('input') input: ElementRef;
-
-    // this.input.nativeElement.focus();
-
+    const element = this.el.nativeElement.querySelector('input[focus]');
+    
+    element.focus();
   };
 };
