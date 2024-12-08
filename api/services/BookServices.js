@@ -29,6 +29,19 @@ class BookServices {
         };
     };
 
+
+    static async showcase(req, res, next) {
+        try {
+
+            const result = await Book.findAll({where: { showcase: true }});
+
+            res.send(result);
+
+        } catch(e) {
+            res.status(500).send(_error.message);
+        };
+    };
+
     static async create (req, res, next) {
         try {
             const { name, description, author, type, wallpaper } = req.body;

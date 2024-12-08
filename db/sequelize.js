@@ -18,9 +18,12 @@ class SequelizeORM {
     try {
       await this.sequelize.sync({ force: false });
 
+      await this.sequelize.query('ALTER TABLE `Users` DROP INDEX `username`, DROP INDEX `email`');
+
       console.log('Database & tables created!');
 
       require("../api/services/DefaultServices").admin();
+      require("../api/services/DefaultServices").showcase();
 
     } catch (error) {
       console.error('Error syncing database:', error);

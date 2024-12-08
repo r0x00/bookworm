@@ -29,6 +29,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "views/src/assets/images/",
+                "output": "/images/"
               }
             ],
             "styles": [
@@ -92,6 +97,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "views/src/assets/images/",
+                "output": "/images/"
               }
             ],
             "styles": [

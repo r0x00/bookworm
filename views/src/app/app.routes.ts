@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 export const routes: Routes = [
     // {
     //     path: 'first-component',
@@ -22,8 +23,7 @@ export const routes: Routes = [
     { path: '', component: DashboardComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignUpComponent },
-    // { path: '',   redirectTo: '/first-component', pathMatch: 'full' }, 
-    // { path: '**', component: PageNotFoundComponent }, 
+    { path: '**', component: PageNotFoundComponent }, 
 ];
 
 

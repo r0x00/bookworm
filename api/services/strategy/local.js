@@ -8,7 +8,7 @@ const verify = function(identifier, password, cb) {
         Passport.findOne({ where: { id: user.id }}).then((passport) => {
             if(!passport) return cb(null, false);
 
-            if(!passport.verifyPassword(password)) return (null, false);
+            if(!passport.verifyPassword(password)) return cb(null, false);
 
             return cb(null, user)
         });

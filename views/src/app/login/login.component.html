@@ -6,11 +6,31 @@
             <div class="input-container">
                 <label for="identifier" class="input-container--label">identifier</label>
                 <input id="identifier" type="text" formControlName="identifier" focus>
+
+                <div class="input-warning" *ngIf="loginForm.get('identifier')?.dirty && loginForm.get('identifier')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+
+                    <div class="input-waning-texts">
+                        <p *ngIf="loginForm.get('identifier')?.hasError('required')" class="no-margins">A identifier is required</p>
+                        <p *ngIf="loginForm.get('identifier')?.hasError('minlength')" class="no-margins">The identifier must be at least 5 characters long</p>
+                        <p *ngIf="loginForm.get('identifier')?.hasError('maxlength')" class="no-margins">The identifier must not be longer than 120 characters</p> 
+                    </div>
+                </div>
             </div>
     
             <div class="input-container">
                 <label for="password" class="input-container--label">password</label>
                 <input id="password" type="password" formControlName="password">
+
+                <div class="input-warning" *ngIf="loginForm.get('password')?.dirty && loginForm.get('password')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+
+                    <div class="input-waning-texts">
+                        <p *ngIf="loginForm.get('password')?.hasError('required')" class="no-margins">A password is required</p>    
+                        <p *ngIf="loginForm.get('password')?.hasError('minlength')" class="no-margins">The password must be at least 8 characters long</p> 
+                        <p *ngIf="loginForm.get('password')?.hasError('maxlength')" class="no-margins">The password must not be longer than 120 characters</p>    
+                    </div>
+                </div>
             </div>
     
             <button class="btn btn-big btn-blue" [disabled]="!loginForm.valid">Access</button>

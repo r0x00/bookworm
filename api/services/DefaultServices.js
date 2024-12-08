@@ -1,5 +1,6 @@
 const User = require("../methods/User");
 const Passport = require("../methods/Passport");
+const Showcase = require("../methods/Showcase");
 
 class DefaultService {
     static async admin () {
@@ -26,6 +27,24 @@ class DefaultService {
 
             User.destroy({ where: { username: admin.username }});
         };
+    };
+
+    static async showcase() {
+        try {
+            const check = await Showcase.findOne({ where: { wallpaper: "/images/wallpaper/welcome.png" }});
+
+            if(check) return;
+
+            await Showcase.create({
+                wallpaper: "/images/wallpaper/welcome.png",
+            });
+
+        } catch(_error) {
+            console.log("Error when creating admin user");
+
+            User.destroy({ where: { username: admin.username }});
+        };
+
     };
 };
 

@@ -1,4 +1,4 @@
-.header>div {
+.left {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -13,4 +13,48 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search {
+    border-radius: var(--border-radius);
+    border: 1px solid #D2D2D2;
+    background-color: #fff;
+    padding: 6.5px 15px;
+    min-width: 365px;
+    max-width: 365px;
+    width: 100%;
+    position: relative;
+
+    &:focus,
+    &:hover {
+        border-color: var(--main-color);
+    }
+
+    &::before {
+        content: '\f002';
+        position: absolute;
+        right: 15px;
+        top: 0;
+        bottom: 0;
+    }
+}
+
+.right {
+    display: flex;
+    gap: 15px;
+}
+
+.me-profile {
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
+    background-color: var(--main-color);
+    color: #fff;
 }

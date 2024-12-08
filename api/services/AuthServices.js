@@ -11,14 +11,7 @@ class AuthServices {
         if(!password) return res.status(400).send("Please add password");
 
 
-        // passport.authenticate('local', { session: false }, function(_error, user) {
-        //     if(!user || _error) return res.status(400).send("Username or password is wrong");
-
-        //     res.send(user);
-
-        // })(req, res, next);
-
-        passport.authenticate('local', { session: false }, function(_error, user) {
+        passport.authenticate('local', { session: true }, function(_error, user) {
             if(!user || _error) return res.status(400).send("Username or password is wrong");
 
             const payload = {
@@ -28,9 +21,18 @@ class AuthServices {
                 permission: user.permission
             };
           
-            const token = jwt.sign(payload, process.env.SECRET, { expiresIn: '30m' });
+            // const token = jwt.sign(payload, process.env.SECRET, { expiresIn: '30m' });
+
+            // res.status(200).send({ token });
+
+            // return;
+
+            req.login(user, function(err) {
+                if (err) return res.status(400).send("An error occurred"); 
+
+                res.status(200).send({ redirect: '/' });
+            });
           
-            res.status(200).send({ token });
 
         })(req, res, next);
     }; 

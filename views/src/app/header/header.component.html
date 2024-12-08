@@ -1,5 +1,21 @@
 <div class="header">
-    <div>
-        <div class="logo"></div>
+    <div class="left">
+        <a class="logo" routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page"></a>
     </div>
+
+    <div *ngIf="isNotLogin" class="right">
+        <button class="btn btn-small btn-yellow">
+            <fa-icon [icon]="faPlus"></fa-icon> Create
+        </button>
+
+        <input class="search" type="text" placeholder="search">
+
+        <div class="me-container">
+            <div class="me-profile">
+                <span *ngIf="!profile?.src">A</span>
+            </div>
+
+        </div>
+    </div>
+
 </div>
