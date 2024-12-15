@@ -20,6 +20,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 50px;
 }
 
 .search {
@@ -57,4 +58,7 @@
     border-radius: 50px;
     background-color: var(--main-color);
     color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

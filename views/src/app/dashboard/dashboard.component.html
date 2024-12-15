@@ -3,29 +3,71 @@
         <img class="showcase-wallapaper" src="/images/wallpaper/welcome.png" alt="showcase wallpaper"/>
 
         <div class="showcase-btn-container">
-            <div class="showcase-btn" *ngFor="let item of showcaseItems"></div>
+            <div class="showcase-btn" *ngFor="let item of showcaseItems; let i = index" [ngClass]="{ 'active': focusedItem == i }"></div>
         </div>
     </div>
 
     <div class="card-container">
         <p class="page-subtitle">Last read</p>
 
-        <div class="book-card-container"></div>
+        <div *ngIf="lastReadItems.length == 0" class="notfound-container">
+            <p class="no-margins">no books found</p>
+        </div>
+
+        <div class="book-card-container" *ngIf="lastReadItems.length > 0">
+            <div class="book-card">
+                <div class="book-top-container">
+                    <div class="book-status">
+                        <p>Finished</p>
+                    </div>
+                    
+                    <img class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
+                    
+                </div>
+
+                <div class="book-content">
+                    <p class="no-margins book-title">Ligula vel luctus ultrices</p>
+                    <p class="no-margins book-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas in erat lacinia suscipit. Praesent facilisis viverra risus pulvinar  semper.</p>
+                </div>
+
+                <div class="book-information">
+                    <p class="no-margins">Last update 02/11/2024</p>
+                    <p class="no-margins">•</p>
+                    <p class="no-margins">120 capitulos</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="card-container">
         <p class="page-subtitle">Discovery</p>
 
-        <div class="book-card-container">
+
+        <div *ngIf="items.length == 0" class="notfound-container">
+            <p class="no-margins">no books found</p>
+        </div>
+
+        <div class="book-card-container" *ngIf="items.length > 0">
             <div class="book-card">
-                <div class="book-image">
+                <div class="book-top-container">
+                    <div class="book-status">
+                        <p>Finished</p>
+                    </div>
+                    
+                    <img class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
                     
                 </div>
-                <div class="book-information">
+
+                <div class="book-content">
                     <p class="no-margins book-title">Ligula vel luctus ultrices</p>
                     <p class="no-margins book-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas in erat lacinia suscipit. Praesent facilisis viverra risus pulvinar  semper.</p>
                 </div>
-                
+
+                <div class="book-information">
+                    <p class="no-margins">Last update 02/11/2024</p>
+                    <p class="no-margins">•</p>
+                    <p class="no-margins">120 capitulos</p>
+                </div>
             </div>
         </div>
     </div>

@@ -26,6 +26,7 @@ body {
     width: 100%;
     min-height: 100vh;
     max-width: 1370px;
+    padding: 0 1em;
 }
 
 .page-title {
@@ -74,7 +75,7 @@ input {
     font-size: 17px;
     transition: border .25s ease-in-out;
     color: #101010;
-    border-radius: 16px 16px 0 0;
+    border-radius: 8px 8px 0 0;
 
     &:hover {
         border-color: #8bb8d2 ;
@@ -137,6 +138,7 @@ input {
     width: 100%;
     cursor: pointer;
     transition: .25s ease-in-out;
+    white-space: nowrap;
 
     &.btn-big {
         padding: 19px 39px;
@@ -476,12 +478,30 @@ button {
 .book-card {
     border-radius: var(--border-radius);
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: background .25s ease-in-out;
+
+    &:hover {
+        background-color: #F0F0F0;
+    }
 }
 
+.book-content, 
 .book-information {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.book-information {
+    flex-direction: row;
+}
+
+.book-information p {
+    font-size: 15px;
+    color: #A8A8A8;
 }
 
 .book-title {
@@ -493,8 +513,46 @@ button {
 .book-description {
     font-size: 15px;
     color: #676767;
+    line-height: 21px;
+    letter-spacing: .8px;
+
 }
 
+.book-image {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--border-radius);
+}
+
+.book-top-container {
+    position: relative;
+}
+
+.book-status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: var(--border-radius);
+    background-color: #141414;
+    color: #fff;
+    padding: 3px 9px;
+}
+
+.book-status p {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: .5px;
+}
+
+
+
+.notfound-container {
+    padding: 20px 15px;
+    border-radius: 16px;
+    font-size: 15px;
+    color: #A8A8A8;
+    background: #F0F0F0;
+}
 
 
 // ------------------

@@ -1,0 +1,91 @@
+<div class="main-container">
+    <h2 class="page-title">New Book</h2>
+
+    <form class="form-container" [formGroup]="bookCreate" (ngSubmit)="create()">
+        <div class="form-container--top">
+            <h3 class="form-container--title">Form</h3>
+        </div>
+
+        <div class="form-container--body">
+            <div class="input-container">
+                <label for="name" class="input-container--label">Name</label>
+                <input id="name" type="text" formControlName="name" focus>
+    
+                <div class="input-warning" *ngIf="bookCreate.get('name')?.dirty && bookCreate.get('name')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="bookCreate.get('name')?.hasError('required')" class="no-margins">A name is required</p>
+                        <p *ngIf="bookCreate.get('name')?.hasError('minlength')" class="no-margins">The name must be at least 3 characters long</p>
+                        <p *ngIf="bookCreate.get('name')?.hasError('maxlength')" class="no-margins">The name must not be longer than 120 characters</p> 
+                    </div>
+                </div>
+            </div>
+    
+            <div class="input-container">
+                <label for="description" class="input-container--label">Description</label>
+                <input id="description" type="text" formControlName="description" focus>
+    
+                <div class="input-warning" *ngIf="bookCreate.get('description')?.dirty && bookCreate.get('description')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="bookCreate.get('description')?.hasError('minlength')" class="no-margins">The description must be at least 5 characters long</p>
+                        <p *ngIf="bookCreate.get('description')?.hasError('maxlength')" class="no-margins">The description must not be longer than 300 characters</p> 
+                    </div>
+                </div>
+            </div>
+    
+            <div class="input-container">
+                <label for="author" class="input-container--label">Author</label>
+                <input id="author" type="text" formControlName="author" focus>
+    
+                <div class="input-warning" *ngIf="bookCreate.get('author')?.dirty && bookCreate.get('author')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="bookCreate.get('author')?.hasError('minlength')" class="no-margins">The author must be at least 3 characters long</p>
+                        <p *ngIf="bookCreate.get('author')?.hasError('maxlength')" class="no-margins">The author must not be longer than 120 characters</p> 
+                    </div>
+                </div>
+            </div>
+    
+            <div class="input-container">
+                <label for="types" class="input-container--label">Types</label>
+                <input id="types" type="text" formControlName="types" focus>
+    
+                <div class="input-warning" *ngIf="bookCreate.get('types')?.dirty && bookCreate.get('types')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="bookCreate.get('types')?.hasError('required')" class="no-margins">A type is required</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="types" class="input-container--label">Wallpaper</label>
+                <input id="types" type="file" formControlName="types">
+    
+                <div class="input-warning" *ngIf="bookCreate.get('types')?.dirty && bookCreate.get('types')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="bookCreate.get('types')?.hasError('required')" class="no-margins">A type is required</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-container--btns">
+                <button class="btn btn-gray" routerLink="/" routerLinkActive="active">
+                    Cancel
+                </button>
+    
+                <button class="btn btn-blue" type="submit" [disabled]="!bookCreate.valid">
+                    Create
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
