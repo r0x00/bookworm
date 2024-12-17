@@ -26,6 +26,7 @@ export class NewBookComponent {
     types: new FormControl('', [ Validators.required ]),
     wallpaper: new FormControl(''),
   });
+  
 
   constructor(private readonly http: HttpClient, private readonly toastr: ToastrService, private readonly router: Router) {}
 
@@ -42,15 +43,16 @@ export class NewBookComponent {
       types: formData.types,
       wallpaper: formData.wallpaper
     }).subscribe({
-      next: function(res: any) {
+      next: (res: any) => {
+        this.router.navigate([`/book/${res.id}`]);
 
+
+        this.toastr.success(`Book ${res.name} was created with success!`, "Success!");
       },
 
-      error: function(_error) {
-
+      error: (_error) => {
+        this.toastr.error("An error occurred when creating book.", "Ops! Something happened!");
       }
     })
-
   }
-
 }

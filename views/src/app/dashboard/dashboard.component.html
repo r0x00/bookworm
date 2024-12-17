@@ -43,30 +43,31 @@
         <p class="page-subtitle">Discovery</p>
 
 
-        <div *ngIf="items.length == 0" class="notfound-container">
+        <div *ngIf="bookItems.length == 0" class="notfound-container">
             <p class="no-margins">no books found</p>
         </div>
 
-        <div class="book-card-container" *ngIf="items.length > 0">
-            <div class="book-card">
-                <div class="book-top-container">
-                    <div class="book-status">
-                        <p>Finished</p>
+        <div *ngIf="bookItems.length > 0">
+            <div class="book-card-container" *ngFor="let item of bookItems">
+                <div class="book-card">
+                    <div class="book-top-container">
+                        <div class="book-status" *ngIf="item.finished">
+                            <p>Finished</p>
+                        </div>
+                        
+                        <img class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
                     </div>
-                    
-                    <img class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
-                    
-                </div>
-
-                <div class="book-content">
-                    <p class="no-margins book-title">Ligula vel luctus ultrices</p>
-                    <p class="no-margins book-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas in erat lacinia suscipit. Praesent facilisis viverra risus pulvinar  semper.</p>
-                </div>
-
-                <div class="book-information">
-                    <p class="no-margins">Last update 02/11/2024</p>
-                    <p class="no-margins">•</p>
-                    <p class="no-margins">120 capitulos</p>
+    
+                    <div class="book-content">
+                        <p class="no-margins book-title">{{item.name}}</p>
+                        <p class="no-margins book-description">{{item.description}}</p>
+                    </div>
+    
+                    <div class="book-information">
+                        <p class="no-margins">Last update {{item.updatedAt}}</p>
+                        <p class="no-margins">•</p>
+                        <p class="no-margins">{{item.chapters ?? 0}} chapters</p>
+                    </div>
                 </div>
             </div>
         </div>

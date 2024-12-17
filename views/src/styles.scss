@@ -87,7 +87,18 @@ input {
     &:disabled {
         border-color: #D2D2D2;
     }
+    
+
+    &[type="file"] {
+        padding: 0;
+        border: unset;
+        background-color: unset;
+        border-radius: 0;
+        margin-top: 20.5px;
+    }
 }
+
+
 
 .input-container--label {
     font-size: 16px;
@@ -482,6 +493,7 @@ button {
     flex-direction: column;
     gap: 15px;
     transition: background .25s ease-in-out;
+    cursor: pointer;
 
     &:hover {
         background-color: #F0F0F0;

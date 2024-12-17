@@ -65,7 +65,7 @@
 
             <div class="input-container">
                 <label for="types" class="input-container--label">Wallpaper</label>
-                <input id="types" type="file" formControlName="types">
+                <input id="types" type="file" formControlName="types" accept="image/jpeg, image/png, image/gif">
     
                 <div class="input-warning" *ngIf="bookCreate.get('types')?.dirty && bookCreate.get('types')?.invalid">
                     <fa-icon [icon]="faCircleExclamation"></fa-icon>

@@ -2,6 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 
+interface Book {
+  id: string,
+  name: string, 
+  description: string,
+  author: string,
+  type: JSON,
+  views: number,
+  finished: boolean,
+  wallpaper: Blob,
+  chapters: number,
+  updatedAt: string
+};
+
+
 @Component({
   selector: 'app-dashboard',
   imports: [ NgFor, NgClass, NgIf ],
@@ -9,13 +23,14 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  items = [];
+  bookItems: Book[] = [];
   focusedItem = 0;
   showcaseItems = [];
   showcaseInterval: any;
   lastReadItems = [];
 
   constructor(private readonly http: HttpClient) {};
+  
 
   ngAfterViewInit () {
     this.loadBooks();
@@ -23,10 +38,11 @@ export class DashboardComponent {
     this.changeShowcase();
   };
 
-  loadBooks () {
+  loadBooks (): void {
     this.http.get('/api/book').subscribe({
-      next: (res) => {
-        
+      next: (res: any) => {
+        this.bookItems = res;
+
         console.log(res)
       },
 
@@ -36,7 +52,7 @@ export class DashboardComponent {
     })
   };
 
-  loadShowcase() {
+  loadShowcase(): void {
     this.http.get('/api/showcase').subscribe({
       next: (res: any) => {
         this.showcaseItems = res;
@@ -50,9 +66,9 @@ export class DashboardComponent {
     })
   };
 
-  changeShowcase() {
+  changeShowcase(): void{
     this.showcaseInterval = setInterval(() => {
-      if(this.focusedItem < this.items.length - 1) {
+      if(this.focusedItem < this.showcaseItems.length - 1) {
         this.focusedItem++;
 
         return;

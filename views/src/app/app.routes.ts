@@ -15,7 +15,7 @@ export const routes: Routes = [
         component: DashboardComponent 
     },
     { 
-        path: 'book', 
+        path: 'book/:id', 
         component: BookComponent,
     },
 
