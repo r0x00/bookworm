@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../db/sequelize');
+const Book = require('./Book');
 
 const User = sequelize.define("User", {
     id: {
@@ -27,5 +28,19 @@ const User = sequelize.define("User", {
         defaultValue: 'common'
     }
 });
+
+User.hasMany(Book, {
+    foreignKey: 'read',
+    as: 'read'
+});
+
+User.hasMany(Book, {
+    foreignKey: 'liked',
+    as: 'liked'
+});
+
+// Book.hasMany(User, {
+//     foreignKey: 'readBy',
+// });
 
 module.exports = User;

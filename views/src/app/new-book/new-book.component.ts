@@ -44,7 +44,7 @@ export class NewBookComponent {
       wallpaper: formData.wallpaper
     }).subscribe({
       next: (res: any) => {
-        this.router.navigate([`/book/${res.id}`]);
+        this.router.navigate([`/book/${res.id}/view`]);
 
 
         this.toastr.success(`Book ${res.name} was created with success!`, "Success!");

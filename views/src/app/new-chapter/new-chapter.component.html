@@ -1,1 +1,52 @@
-<p>new-chapter works!</p>
+<div class="main-container">
+    <h2 class="page-title">New Chapter</h2>
+
+    <form class="form-container" [formGroup]="chapterCreate" (ngSubmit)="create()">
+        <div class="form-container--top">
+            <h3 class="form-container--title">Form</h3>
+        </div>
+
+        <div class="form-container--body">
+            <div class="input-container">
+                <label for="title" class="input-container--label">Title</label>
+                <input id="title" type="text" formControlName="title" focus>
+    
+                <div class="input-warning" *ngIf="chapterCreate.get('title')?.dirty && chapterCreate.get('title')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="chapterCreate.get('title')?.hasError('required')" class="no-margins">A title is required</p>
+                        <p *ngIf="chapterCreate.get('title')?.hasError('minlength')" class="no-margins">The title must be at least 3 characters long</p>
+                        <p *ngIf="chapterCreate.get('title')?.hasError('maxlength')" class="no-margins">The title must not be longer than 120 characters</p> 
+                    </div>
+                </div>
+            </div>
+    
+            <div class="input-container">
+                <label for="content" class="input-container--label">Content</label>
+                <input id="content" type="text" formControlName="content" focus>
+    
+                <div class="input-warning" *ngIf="chapterCreate.get('content')?.dirty && chapterCreate.get('content')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="chapterCreate.get('content')?.hasError('minlength')" class="no-margins">The content must be at least 300 characters long</p>
+                        <p *ngIf="chapterCreate.get('content')?.hasError('maxlength')" class="no-margins">The content must not be longer than 10000 characters</p> 
+                    </div>
+                </div>
+            </div>
+    
+            <div class="form-container--btns">
+                <button class="btn btn-gray" routerLink="/book/{{bookId}}/view" routerLinkActive="active">
+                    Cancel
+                </button>
+    
+                <button class="btn btn-blue" type="submit">
+                    <!-- [disabled]="!chapterCreate.valid" -->
+                    Create
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>

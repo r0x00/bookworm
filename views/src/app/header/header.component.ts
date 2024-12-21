@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,4 +16,15 @@ export class HeaderComponent {
   isNotLogin = true;
   profile: any;
 
-}
+  constructor(private readonly router: Router) {}
+
+  ngAfterViewInit ():void {
+    this.router.events.subscribe((event: any) => {
+      if(event.url === '/login' || event.url === '/signup') {
+        this.isNotLogin = false;
+      } else {
+        this.isNotLogin = true;
+      }
+    });
+  }
+};

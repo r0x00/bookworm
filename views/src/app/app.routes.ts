@@ -15,7 +15,7 @@ export const routes: Routes = [
         component: DashboardComponent 
     },
     { 
-        path: 'book/:id', 
+        path: 'book/:id/view', 
         component: BookComponent,
     },
 
@@ -24,11 +24,11 @@ export const routes: Routes = [
         component: NewBookComponent,
     },
     {
-        path: 'chapter',
+        path: 'chapter/:id/view',
         component: ChapterComponent,
     },
     {
-        path: 'chapter/new',
+        path: 'book/:bookId/chapter/new',
         component: NewChapterComponent
     },
     {

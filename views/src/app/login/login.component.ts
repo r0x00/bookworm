@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
-
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login',
   imports: [ RouterLink, RouterLinkActive, ReactiveFormsModule, FontAwesomeModule, CommonModule ],
@@ -23,9 +23,17 @@ export class LoginComponent {
     password: new FormControl('', [ Validators.required, Validators.minLength(8), Validators.maxLength(120) ])
   });
 
-  constructor(private readonly http: HttpClient, private readonly toastr: ToastrService, private readonly el: ElementRef, private readonly router: Router) {};
+  constructor(
+    private readonly http: HttpClient, 
+    private readonly toastr: ToastrService, 
+    private readonly el: ElementRef, 
+    private readonly router: Router,
+    private readonly CookieService: CookieService
+  ) {};
 
   ngAfterViewInit() {
+
+
     this.focusInput();
   };
 
@@ -40,7 +48,11 @@ export class LoginComponent {
       password: formData.password
     }).subscribe({
       next: (res: any) => {
+        this.CookieService.set('session', res.user);
         this.router.navigate([res.redirect]);
+
+        console.log(res)
+
       },
 
       error: (_error) => {

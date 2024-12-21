@@ -30,7 +30,7 @@ class AuthServices {
             req.login(user, function(err) {
                 if (err) return res.status(400).send("An error occurred"); 
 
-                res.status(200).send({ redirect: '/' });
+                res.status(200).send({ redirect: '/', user: user});
             });
           
 

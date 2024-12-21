@@ -8,6 +8,7 @@ const UserServices = require('../api/services/UserServices');
 const EnviromentServices = require('../api/services/EnviromentServices');
 const policy = require('../api/policy');
 const ShowcaseService = require('../api/services/ShowcaseService');
+const MeService = require('../api/services/MeService');
 
 const router = express.Router();
 
@@ -55,6 +56,12 @@ routes.book = {
         services: BookServices,
         method: "delete",
         policy:[ "auth" ]
+    },
+
+    "post /book/like": {
+        services: BookServices,
+        method: "like",
+        policy: [ "auth" ]
     },
 };
 
@@ -159,6 +166,20 @@ routes.user = {
         services: UserServices,
         method: "delete",
         policy: [ "auth", "admin" ]
+    },
+};
+
+
+routes.me = {
+    "get /me": {
+        services: MeService,
+        method: "show",
+        policy: [ "auth" ]
+    },
+
+    "get /me/books/read": {
+        services: MeService,
+        method: "loadBookRead"
     },
 };
 

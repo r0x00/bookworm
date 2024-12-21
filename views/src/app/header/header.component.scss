@@ -2,7 +2,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 21px 1em;
     color: #fff;
 }
 
@@ -21,6 +20,7 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 50px;
+    padding: 21px 1em;
 }
 
 .search {
@@ -32,6 +32,7 @@
     max-width: 365px;
     width: 100%;
     position: relative;
+    display: none;
 
     &:focus,
     &:hover {
@@ -50,6 +51,7 @@
 .right {
     display: flex;
     gap: 15px;
+    align-items: center;
 }
 
 .me-profile {
@@ -58,7 +60,31 @@
     border-radius: 50px;
     background-color: var(--main-color);
     color: #fff;
-    display: flex;
     justify-content: center;
     align-items: center;
+    display: none;
+}
+
+
+.login-link {
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    color: var(--main-color);
+}
+
+
+.btn-book {
+    display: none;
+}
+
+@media(min-width: 900px) {
+    .btn-book,
+    .search {
+        display: block;
+    }
+
+    .me-profile {
+        display: flex;
+    }
 }

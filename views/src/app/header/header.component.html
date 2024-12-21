@@ -4,18 +4,18 @@
     </div>
 
     <div *ngIf="isNotLogin" class="right">
-        <button class="btn btn-small btn-yellow" routerLink="/book/new" routerLinkActive="active">
+        <button class="btn btn-small btn-yellow btn-book" routerLink="/book/new" routerLinkActive="active">
             <fa-icon [icon]="faPlus"></fa-icon> Create
         </button>
 
         <input class="search" type="text" placeholder="search">
 
-        <div class="me-container">
+        <div class="me-container" *ngIf="profile">
             <div class="me-profile">
                 <span *ngIf="!profile?.src">A</span>
             </div>
-
         </div>
-    </div>
 
+        <a *ngIf="!profile" class="login-link" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a>
+    </div>
 </div>

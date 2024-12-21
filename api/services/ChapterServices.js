@@ -14,7 +14,13 @@ class ChapterServices {
 
             const result = await Chapter.findAll({ where: { book: book } });
 
-            res.send(result)
+            const chapters = result.map(chapter => {
+                chapter.content = chapter.content.slice(0, 200) + '...';
+                
+                return chapter;
+            });
+
+            res.send(chapters)
 
         } catch(_error) {
             res.status(500).send(_error.message);

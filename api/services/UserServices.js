@@ -42,13 +42,10 @@ class UserServices {
                 permission
             });
 
-            console.log(result)
-
             await Passport.create({
                 user: result,
                 password: password,
             });
-
 
             res.send(result);
 

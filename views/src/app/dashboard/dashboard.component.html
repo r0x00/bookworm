@@ -1,6 +1,12 @@
 <div class="main-container">
     <div class="showcase">
-        <img class="showcase-wallapaper" src="/images/wallpaper/welcome.png" alt="showcase wallpaper"/>
+        <div *ngIf="showcaseItems.length <= 0" class="showcase-wallpaper-div" [ngStyle]="{ 'background-image': 'url(/images/wallpaper/welcome.png)' }" alt="showcase wallpaper"></div>
+        <!-- <img class="showcase-wallpaper" src="/images/wallpaper/welcome.png" alt="showcase wallpaper"/> -->
+
+        <div *ngFor="let item of showcaseItems; let i = index" class="showcase-wallpaper">
+            <div *ngIf="showcaseItems.length >= 0 && i == focusedItem" [ngStyle]="{ 'background-image': 'url(' + item.wallpaper + ')' }" alt="showcase wallpaper"></div>
+            <!-- <img *ngIf="showcaseItems.length >= 0 && i == focusedItem" [src]="item.wallpaper" alt="showcase wallpaper"/> -->
+        </div>
 
         <div class="showcase-btn-container">
             <div class="showcase-btn" *ngFor="let item of showcaseItems; let i = index" [ngClass]="{ 'active': focusedItem == i }"></div>
@@ -14,41 +20,8 @@
             <p class="no-margins">no books found</p>
         </div>
 
-        <div class="book-card-container" *ngIf="lastReadItems.length > 0">
-            <div class="book-card">
-                <div class="book-top-container">
-                    <div class="book-status">
-                        <p>Finished</p>
-                    </div>
-                    
-                    <img class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
-                    
-                </div>
-
-                <div class="book-content">
-                    <p class="no-margins book-title">Ligula vel luctus ultrices</p>
-                    <p class="no-margins book-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer egestas in erat lacinia suscipit. Praesent facilisis viverra risus pulvinar  semper.</p>
-                </div>
-
-                <div class="book-information">
-                    <p class="no-margins">Last update 02/11/2024</p>
-                    <p class="no-margins">•</p>
-                    <p class="no-margins">120 capitulos</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card-container">
-        <p class="page-subtitle">Discovery</p>
-
-
-        <div *ngIf="bookItems.length == 0" class="notfound-container">
-            <p class="no-margins">no books found</p>
-        </div>
-
-        <div *ngIf="bookItems.length > 0">
-            <div class="book-card-container" *ngFor="let item of bookItems">
+        <div *ngIf="lastReadItems.length > 0" class="book-card-container" >
+            <div  *ngFor="let item of lastReadItems" routerLink="/book/{{item.id}}/view"> 
                 <div class="book-card">
                     <div class="book-top-container">
                         <div class="book-status" *ngIf="item.finished">
@@ -65,8 +38,46 @@
     
                     <div class="book-information">
                         <p class="no-margins">Last update {{item.updatedAt}}</p>
-                        <p class="no-margins">•</p>
-                        <p class="no-margins">{{item.chapters ?? 0}} chapters</p>
+                        <div></div>
+                        <p class="no-margins">{{item.chapters || 0}} chapters</p>
+                        <div></div>
+                        <p class="no-margins">{{item.views || 0}} views</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-container">
+        <p class="page-subtitle">Discovery</p>
+
+
+        <div *ngIf="bookItems.length == 0" class="notfound-container">
+            <p class="no-margins">no books found</p>
+        </div>
+
+        <div *ngIf="bookItems.length > 0" class="book-card-container">
+            <div *ngFor="let item of bookItems" routerLink="/book/{{item.id}}/view"> 
+                <div class="book-card">
+                    <div class="book-top-container">
+                        <div class="book-status" *ngIf="item.finished">
+                            <p>Finished</p>
+                        </div>
+                        
+                        <img class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
+                    </div>
+    
+                    <div class="book-content">
+                        <p class="no-margins book-title">{{item.name}}</p>
+                        <p class="no-margins book-description">{{item.description}}</p>
+                    </div>
+    
+                    <div class="book-information">
+                        <p class="no-margins">Last update {{item.updatedAt}}</p>
+                        <div></div>
+                        <p class="no-margins">{{item.chapters || 0}} chapters</p>
+                        <div></div>
+                        <p class="no-margins">{{item.views || 0}} views</p>
                     </div>
                 </div>
             </div>

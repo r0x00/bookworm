@@ -1,15 +1,21 @@
 .footer {
     position: relative;
-}
+    margin-top: 50px;
 
-.footer>div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 21px 1em;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    color: #fff;
+    & > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 21px 1em;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        color: #fff;
+    }
+
+    &.footerNotLogin > div {
+        position: relative;
+        color: #101010;
+    }
 }

@@ -1,1 +1,94 @@
-<p>book works!</p>
+<div class="main-container">
+    <div>
+        <div class="book-container-info">
+            <div class="book-container-info--top">
+                <div class="book-btn-actions-container">
+                    <button class="btn btn-yellow btn-small btn-text btn-hug" routerLink="/book/{{book?.id}}/chapter/new">
+                        <fa-icon [icon]="faPlus"></fa-icon>  New Chapter
+                    </button>
+        
+                    <button class="btn btn-blue btn-small btn-text btn-hug" (click)="editBook()">
+                        <fa-icon [icon]="faPenNib"></fa-icon>  Edit
+                    </button>
+        
+                    <button class="btn btn-red btn-small btn-text btn-hug" (click)="deleteBook()">
+                        <fa-icon [icon]="faTrash"></fa-icon>  Delete
+                    </button>
+                </div>
+    
+                <div></div>
+            </div>
+            
+            <div class="book-wallpaper-container">
+                <img class="book-wallpaper-container--wallpaper" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
+    
+                <div class="book-wallpaper-container--btns">
+                    <button class="btn btn-black btn-hug" (click)="playLastChapter()">
+                        <fa-icon [icon]="faPlay"></fa-icon>
+                    </button>
+    
+                    <button class="btn btn-pink btn-medium btn-hug" (click)="changeLikeBook()">
+                        <fa-icon [icon]="faHeartOutline"></fa-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="book-info-container">
+            <h3 class="book-info-container--title">{{book?.name}}</h3>
+            <p class="book-info-container--description">{{book?.description}}</p>
+            <p class="book-info-container--author">{{book?.author}}</p>
+        </div>
+
+        <div class="book-tag-container" *ngIf="book?.type">
+            <div class="book-tag"  *ngFor="let item of book?.type">{{item}}</div>
+        </div>
+
+        <div class="book-moreInfo-container">
+            <p class="no-margins">Created {{book?.createdAt}}</p>
+            <div></div>
+            <p class="no-margins">Last Update {{book?.updatedAt}}</p>
+            <div></div>
+            <p class="no-margins">{{book?.views || 0}} views</p>
+
+            <div *ngIf="book?.finished"></div>
+            <p class="no-margins" *ngIf="book?.finished">Finished</p>
+        </div>
+    </div>
+    
+    <div class="card-container">
+        <p class="page-subtitle">Chapters {{chapters?.length || 0}}</p>
+
+        <div *ngIf="!chapters || chapters?.length == 0" class="notfound-container">
+            <p class="no-margins">No chapters found</p>
+        </div>
+
+        <div class="chapters-container" *ngIf="chapters && chapters.length > 0">
+            <div class="chapter-card-container" *ngFor="let item of chapters; let i = index" routerLink="/chapter/{{item.id}}/view"> 
+                <div class="chapter-card">
+                    <h3 class="no-margins">{{i + 1}}</h3>
+                    <div class="chapter-card--content">
+                        <div class="chapter-card--bodyContent">
+                            <p class="chapter-card--title">{{item.title}}</p>
+                            <p class="chapter-card--body">{{item.content}}</p>
+                        </div>
+
+                        <div class="chapter-card--info">
+                            <p class="no-margins">Created {{book?.createdAt}}</p>
+                            <div></div>
+                            <p class="no-margins">Last Update {{book?.updatedAt}}</p>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+
+        <div *ngIf="chapters && chapters.length > 0" class="container--pagination">
+            <button class="btn btn-grey btn-small btn-hug btn-search"><<</button>
+            <button class="btn btn-grey btn-small btn-hug btn-search"><</button>
+            <button class="btn btn-grey btn-small btn-hug btn-search">1</button>
+            <button class="btn btn-grey btn-small btn-hug btn-search">></button>
+            <button class="btn btn-grey btn-small btn-hug btn-search">>></button>
+        </div>
+    </div>
+</div>

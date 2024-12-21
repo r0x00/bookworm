@@ -1,4 +1,5 @@
 const Book = require('../methods/Book');
+const User = require('../methods/User');
 
 class BookServices {
     static async load (req, res, next) {
@@ -21,23 +22,24 @@ class BookServices {
             const result = await Book.findOne({ where: { id: id} });
 
             if(!result) return res.status(400).send("Book not found");
+            
+            const userId = req.session?.passport?.user?.id;
+
+            if(userId) {
+                const user = await User.findOne( { where: { id: userId }});
+
+                const alreadyRead = await user.hasRead(id);
+
+                if(!alreadyRead) {
+                    await user.addRead(id);
+
+                    await Book.update({ views: result.views + 1 }, { where: { id: id }});
+                };
+            };
 
             res.send(result);
 
         } catch(_error) {
-            res.status(500).send(_error.message);
-        };
-    };
-
-
-    static async showcase(req, res, next) {
-        try {
-
-            const result = await Book.findAll({where: { showcase: true }});
-
-            res.send(result);
-
-        } catch(e) {
             res.status(500).send(_error.message);
         };
     };
@@ -101,6 +103,28 @@ class BookServices {
             res.status(500).send(_error.message);
         };
     };
+
+    static async like (req, res, next) {
+        try {
+            const { id } = req.body;
+
+            if(!id) return res.status(400).send("Please add book ID")
+            if(!req.session?.passport?.user?.id) return res.status(400).send("Please login");
+            
+            const user = await User.findOne({ where: { id: req.session?.passport?.user?.id }});
+
+            const bookLike = await user.getLiked(id);
+
+            if(!bookLike) await user.addLiked(id);
+            else await user.removeLiked(id);
+
+            res.status(200).send();
+
+        } catch(_error) {    
+            res.status(500).send(_error.message);
+        };
+
+    }
 };
 
 module.exports = BookServices;
