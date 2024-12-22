@@ -6,6 +6,8 @@ class DictionaryServices {
             const { query, languageFrom, languageTo } = req.query;
 
             if(!query) return res.status(400).send('Please add query');
+
+            if(query.replace(/\s/g, "") == '') return res.status(400).send('Please add query');
         
             if(!languageFrom) return res.status(400).send('Please add languageFrom');
 

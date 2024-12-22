@@ -35,6 +35,8 @@ class BookServices {
 
                     await Book.update({ views: result.views + 1 }, { where: { id: id }});
                 };
+
+                result.liked = await user.hasLiked(id);
             };
 
             res.send(result);
@@ -113,7 +115,7 @@ class BookServices {
             
             const user = await User.findOne({ where: { id: req.session?.passport?.user?.id }});
 
-            const bookLike = await user.getLiked(id);
+            const bookLike = await user.hasLiked(id);
 
             if(!bookLike) await user.addLiked(id);
             else await user.removeLiked(id);
@@ -123,7 +125,6 @@ class BookServices {
         } catch(_error) {    
             res.status(500).send(_error.message);
         };
-
     }
 };
 

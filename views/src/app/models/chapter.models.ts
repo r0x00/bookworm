@@ -4,6 +4,7 @@ export interface Chapter {
     content: string,
     views: number,
     updatedAt: string,
-    createdAt: string
+    createdAt: string,
+    chapterNumber: number
 };
   

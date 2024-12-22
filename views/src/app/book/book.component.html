@@ -20,7 +20,14 @@
             </div>
             
             <div class="book-wallpaper-container">
-                <img class="book-wallpaper-container--wallpaper" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
+                <!-- <img class="book-wallpaper-container--wallpaper" src="/images/wallpaper/welcome.png" alt="book wallpaper"/> -->
+
+                
+                <div class="book-wallpaper-container--wallpaper">
+                    <fa-icon *ngIf="!book?.wallpaper || typeof book?.wallpaper != 'string'" [icon]="faImage" class="fa-7x"></fa-icon>
+                    <img *ngIf="book?.wallpaper && typeof book?.wallpaper == 'string'" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
+                </div>
+                
     
                 <div class="book-wallpaper-container--btns">
                     <button class="btn btn-black btn-hug" (click)="playLastChapter()">
@@ -28,7 +35,9 @@
                     </button>
     
                     <button class="btn btn-pink btn-medium btn-hug" (click)="changeLikeBook()">
-                        <fa-icon [icon]="faHeartOutline"></fa-icon>
+                        <fa-icon *ngIf="!book?.liked" [icon]="faHeartOutline"></fa-icon>
+                        <fa-icon *ngIf="book?.liked" [icon]="faHeartFull"></fa-icon>
+                        
                     </button>
                 </div>
             </div>
@@ -64,7 +73,7 @@
         </div>
 
         <div class="chapters-container" *ngIf="chapters && chapters.length > 0">
-            <div class="chapter-card-container" *ngFor="let item of chapters; let i = index" routerLink="/chapter/{{item.id}}/view"> 
+            <div class="chapter-card-container" *ngFor="let item of chapters; let i = index" routerLink="/book/{{book?.id}}/chapter/{{item?.id}}"> 
                 <div class="chapter-card">
                     <h3 class="no-margins">{{i + 1}}</h3>
                     <div class="chapter-card--content">
@@ -83,12 +92,12 @@
             </div>
         </div>
 
-        <div *ngIf="chapters && chapters.length > 0" class="container--pagination">
-            <button class="btn btn-grey btn-small btn-hug btn-search"><<</button>
-            <button class="btn btn-grey btn-small btn-hug btn-search"><</button>
-            <button class="btn btn-grey btn-small btn-hug btn-search">1</button>
-            <button class="btn btn-grey btn-small btn-hug btn-search">></button>
-            <button class="btn btn-grey btn-small btn-hug btn-search">>></button>
+        <div *ngIf="chapters && chapters.length > 0 && chaptersPagination" class="container--pagination">
+            <button class="btn btn-grey btn-small btn-hug btn-search" (click)="changePage('first')"><<</button>
+            <button class="btn btn-grey btn-small btn-hug btn-search" (click)="changePage('prev')"><</button>
+            <button class="btn btn-blue btn-small btn-hug btn-search" *ngFor="let item of chaptersPagination.maxPagesArray; let i = index" (click)="changePage(i)" [ngClass]="{ 'btn-grey': chaptersPagination.page != i + 1 }">{{ i + 1 }}</button>
+            <button class="btn btn-grey btn-small btn-hug btn-search" (click)="changePage('next')">></button>
+            <button class="btn btn-grey btn-small btn-hug btn-search" (click)="changePage('last')">>></button>
         </div>
     </div>
 </div>

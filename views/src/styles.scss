@@ -3,6 +3,12 @@
     src: url(assets/fonts/Robot/Roboto-Medium.ttf)
 }
 
+@font-face {
+    font-family: RobotoRegular;
+    src: url(assets/fonts/Robot/Roboto-Regular.ttf)
+}
+
+
 
 :root {
     --main-color: #7ABEE6;
@@ -562,9 +568,21 @@ button {
 
 }
 
+.book-image-container {
+    width: 100%;
+    height: 161px;
+    border-radius: var(--border-radius);
+    background-color: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #4D4D4D;
+}
+
 .book-image {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     border-radius: var(--border-radius);
 }
 

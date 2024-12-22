@@ -26,7 +26,18 @@
     width: 100%;
     border-radius: var(--border-radius);
     object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E6E6E6;
+    
+    & image {
+        height: 100%;
+        width: 100%;
+    }
 }
+
+
 
 .book-wallpaper-container--btns {
     position: absolute;
@@ -105,6 +116,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(638px, 1fr));
     gap: 25px;
+    margin-bottom: 45px;
 }
 
 .card-chapter-container {

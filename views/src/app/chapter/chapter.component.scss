@@ -1,0 +1,53 @@
+
+.book-path {
+    color: #4D4D4D;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+.chapter-content {
+    font-size: 18px;
+    letter-spacing: .5px;
+    line-height: 35px;
+    color: #101010;
+    margin-bottom: 45px;
+    font-family: RobotoRegular;
+}
+
+.btns-container {
+    display: flex;
+    gap: 15px;
+    justify-content: end;
+}
+
+@media (min-width: 800px) {
+
+    .book-path {
+        font-size: 18px;
+    }
+
+    
+    .page-title {
+        margin-bottom: 45px;
+    }
+
+    
+    .chapter-content {
+        font-size: 23px;
+        line-height: 45px;
+    }
+
+    .btns-container {
+        margin-left: auto ;
+        max-width: 700px;
+    }    
+}

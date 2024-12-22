@@ -1,1 +1,12 @@
-<p>chapter works!</p>
+<div class="main-container">
+    <a class="book-path" routerLink="/book/{{book?.id}}/view" routerLinkActive="active" ariaCurrentWhenActive="page">{{book?.name}}</a>
+
+    <h2 class="page-title">{{chapter?.title}} {{(chapter?.chapterNumber || 0) + 1}}</h2>
+
+    <p class="chapter-content" (mouseup)="mouseup()">{{chapter?.content}}</p>
+
+    <div class="btns-container">
+        <button class="btn btn-gray btn-big" (click)="prevChapter()" [disabled]="!this.prevChapterId || this.prevChapterId == ''">Previous</button>
+        <button class="btn btn-blue btn-big" (click)="nextChapter()" [disabled]="!this.nextChapterId || this.nextChapterId == ''">Next</button>
+    </div>
+</div>

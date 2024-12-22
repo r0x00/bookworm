@@ -27,8 +27,14 @@
                         <div class="book-status" *ngIf="item.finished">
                             <p>Finished</p>
                         </div>
+
+
+                        <div class="book-image-container">
+                            <fa-icon *ngIf="!item.wallpaper || typeof item.wallpaper != 'string'" [icon]="faImage" class="fa-4x"></fa-icon>
+                            <img *ngIf="item.wallpaper && typeof item.wallpaper == 'string'" class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
+                        </div>
                         
-                        <img class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
+
                     </div>
     
                     <div class="book-content">
@@ -63,8 +69,13 @@
                         <div class="book-status" *ngIf="item.finished">
                             <p>Finished</p>
                         </div>
+
+                        <div class="book-image-container">
+                            <fa-icon *ngIf="!item.wallpaper || typeof item.wallpaper != 'string'" [icon]="faImage" class="fa-4x"></fa-icon>
+                            <img *ngIf="item.wallpaper && typeof item.wallpaper == 'string'" class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
+                        </div>
+
                         
-                        <img class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
                     </div>
     
                     <div class="book-content">

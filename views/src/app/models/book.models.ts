@@ -10,7 +10,9 @@ export interface Book {
     finished: boolean,
     wallpaper: Blob,
     chapters: Chapter[],
+    chaptersCount: number,
     updatedAt: string,
     createdAt: string,
+    liked: boolean
 };
   

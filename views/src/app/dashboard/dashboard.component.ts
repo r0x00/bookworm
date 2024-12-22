@@ -6,11 +6,13 @@ import { ToastrService } from 'ngx-toastr';
 import { Book } from '../models/book.models';
 import { Showcase } from '../models/showcase.models';
 import moment from 'moment';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faImage } from '@fortawesome/free-regular-svg-icons';
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [ NgFor, NgClass, NgIf, RouterLink, NgStyle ],
+  imports: [ NgFor, NgClass, NgIf, RouterLink, NgStyle, FontAwesomeModule ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -20,6 +22,8 @@ export class DashboardComponent {
   showcaseItems: Showcase[] = [];
   showcaseInterval: any;
   lastReadItems: Book[] = [];
+
+  faImage = faImage;
 
   constructor(private readonly http: HttpClient, private readonly toastr:ToastrService) {};
 

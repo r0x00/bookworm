@@ -124,6 +124,11 @@ routes.chapter = {
         method: "delete",
         policy: [ "auth" ]
     },
+
+    "get /chapter/book/:book/count": {
+        services: ChapterServices,
+        method: "countBookChapters"
+    },
 };
 
 routes.auth = {

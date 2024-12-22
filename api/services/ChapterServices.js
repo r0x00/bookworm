@@ -4,7 +4,7 @@ const Book = require('../methods/Book');
 class ChapterServices {
     static async load (req, res, next) {
         try {
-            const { book } = req.params;
+            const { book, page, limit } = req.params;
 
             if(!book) return res.status(400).send("Please add book ID");
 
@@ -12,7 +12,23 @@ class ChapterServices {
 
             if(!foundBook) return res.status(404).send("Book not found");
 
-            const result = await Chapter.findAll({ where: { book: book } });
+            const total = await Chapter.count({ where: { book: book }});
+
+            const pagination = {
+                limit: limit ?? 10,
+                total: total,
+                page: page ?? 1,
+            };
+
+            pagination.maxPages = Math.ceil(total / pagination.limit);
+
+            if(pagination.maxPages != 0&& pagination.page > pagination.maxPages) return res.status(404).send("You reached the last page");
+            if(pagination.page < 1) return res.status(404).send("You reached the first page");
+
+            const result = await Chapter.findAll({ where: { book: book } }, {
+                skip: (pagination.page - 1) * pagination.limit,
+                limit: pagination.limit
+            });
 
             const chapters = result.map(chapter => {
                 chapter.content = chapter.content.slice(0, 200) + '...';
@@ -20,9 +36,10 @@ class ChapterServices {
                 return chapter;
             });
 
-            res.send(chapters)
+            res.send({ chapters, pagination });
 
         } catch(_error) {
+            console.log(_error)
             res.status(500).send(_error.message);
         };
     };
@@ -33,13 +50,39 @@ class ChapterServices {
 
             if(!id) return res.status(400).send("Please add chapter ID");
 
-            const result = await Chapter.findOne({  where: { id: id } });
+            const result = await Chapter.findOne({  where: { id: id }, include: [ { model: Book, as: 'Book', attributes: [ 'id', 'name' ]} ] });
 
-            if(!result) return res.status(400).send("Chapter not found")
+            if(!result) return res.status(400).send("Chapter not found");
 
-            res.send(result);
+            const chapters = await Chapter.findAll({ where: { book: result.Book.id }, attributes: [ 'id', 'title' ]});
+
+            let currentChapterNumber;
+
+            for (let i = 0; i < chapters.length; i++) { 
+                if(chapters[i].id == id) currentChapterNumber = i;
+            };
+
+            let prevChapter = chapters[currentChapterNumber - 1];
+            if(prevChapter) prevChapter = { ...prevChapter.dataValues, chapterNumber: currentChapterNumber - 1 };
+            
+            let nextChapter = chapters[currentChapterNumber + 1];
+            if(nextChapter) nextChapter = { ...nextChapter.dataValues, chapterNumber: currentChapterNumber + 1 };
+        
+
+            const nearChapterInfo = {
+                prev: prevChapter,
+                next: nextChapter,
+            };
+
+            result.dataValues.chapterNumber = currentChapterNumber;
+
+            res.send({
+                chapter: result,
+                nearChapterInfo
+            });
 
         } catch(_error) {
+            console.log(_error)
             res.status(500).send(_error.message);
         };
     };
@@ -102,6 +145,22 @@ class ChapterServices {
         } catch(_error) {
             res.status(500).send(_error.message);
         };
+    };
+
+    static async countBookChapters (req, res, next) {
+        try {
+            const { id } = req.params;
+
+            if(!id) return res.status(400).send("Please add book ID");
+            
+            const result = await Chapter.count({ where: { book: id }});
+
+            res.send({ total: result });
+
+        } catch(_error) {
+            res.status(500).send(_error.message);
+        }
+
     };
 };
 
