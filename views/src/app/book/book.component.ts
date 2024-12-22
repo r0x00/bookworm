@@ -56,6 +56,8 @@ export class BookComponent {
           this.book.updatedAt = moment(this.book?.updatedAt).format("DD/MM/YYYY");
         };
 
+        console.log(res)
+
         this.loadChapters();
       },
       error: (_error) => {
@@ -75,7 +77,7 @@ export class BookComponent {
 
           return item;
         });
-        
+
         this.chaptersPagination = res.pagination;
 
         const maxPagesArray = Array.from(String(res.pagination.maxPages), Number);
@@ -126,13 +128,21 @@ export class BookComponent {
   changeLikeBook(): void {
     if(!this.book) return;
 
-    const liked_temp = this.book.liked;
+    const liked_temp = this.book.userLiked;
+    const likes_temp = this.book.likes;
 
-    this.book.liked = !this.book.liked;
+    this.book.userLiked = !this.book.userLiked;
+
+    if(this.book.userLiked) this.book.likes++;
+    else this.book.likes--;
     
     this.http.post("/api/book/like/", { id: this.bookId }).subscribe({
       error: (_error) => {
-        if(this.book) this.book.liked = liked_temp;
+        if(this.book) {
+          this.book.userLiked = liked_temp;
+
+          this.book.likes = likes_temp;
+        };
 
         this.toastr.error("It was not possible to like book","Ops! Something happened!");
       }

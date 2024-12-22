@@ -16,7 +16,7 @@ class MeService {
         try {
             const user = await User.findOne({ where: { id: req.user.id }});
             
-            const result = await user.getRead();
+            const result = await user.getReadBook();
 
             res.send(result);
 

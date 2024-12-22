@@ -13,6 +13,7 @@ export interface Book {
     chaptersCount: number,
     updatedAt: string,
     createdAt: string,
-    liked: boolean
+    likes: number,
+    userLiked: boolean
 };
   

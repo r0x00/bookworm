@@ -1,5 +1,6 @@
 const Chapter = require('../methods/Chapter');
 const Book = require('../methods/Book');
+const User = require('../methods/User');
 
 class ChapterServices {
     static async load (req, res, next) {
@@ -22,7 +23,7 @@ class ChapterServices {
 
             pagination.maxPages = Math.ceil(total / pagination.limit);
 
-            if(pagination.maxPages != 0&& pagination.page > pagination.maxPages) return res.status(404).send("You reached the last page");
+            if(pagination.maxPages != 0 && pagination.page > pagination.maxPages) return res.status(404).send("You reached the last page");
             if(pagination.page < 1) return res.status(404).send("You reached the first page");
 
             const result = await Chapter.findAll({ where: { book: book } }, {
@@ -30,16 +31,30 @@ class ChapterServices {
                 limit: pagination.limit
             });
 
-            const chapters = result.map(chapter => {
+
+            const userId = req.session?.passport?.user?.id;
+
+            let user;
+            if(userId) user = await User.findOne( { where: { id: userId }});
+
+            const chapters = [];
+
+            for await (let chapter of result) {
                 chapter.content = chapter.content.slice(0, 200) + '...';
+
+                if(userId) {
+                    const alreadyRead = await user.hasReadChapter(chapter.id);
+
+                    chapter.dataValues.read = alreadyRead;
+                };
                 
-                return chapter;
-            });
+                chapters.push(chapter)
+            };
+            
 
             res.send({ chapters, pagination });
 
         } catch(_error) {
-            console.log(_error)
             res.status(500).send(_error.message);
         };
     };
@@ -55,6 +70,20 @@ class ChapterServices {
             if(!result) return res.status(400).send("Chapter not found");
 
             const chapters = await Chapter.findAll({ where: { book: result.Book.id }, attributes: [ 'id', 'title' ]});
+
+            const userId = req.session?.passport?.user?.id;
+
+            if(userId) {
+                const user = await User.findOne( { where: { id: userId }});
+
+                const alreadyRead = await user.hasReadChapter(id);
+
+                if(!alreadyRead) {
+                    await user.addReadChapter(id);
+
+                    await Chapter.update({ views: result.views + 1 }, { where: { id: id }});
+                };
+            };
 
             let currentChapterNumber;
 

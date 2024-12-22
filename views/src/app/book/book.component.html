@@ -3,7 +3,7 @@
         <div class="book-container-info">
             <div class="book-container-info--top">
                 <div class="book-btn-actions-container">
-                    <button class="btn btn-yellow btn-small btn-text btn-hug" routerLink="/book/{{book?.id}}/chapter/new">
+                    <button class="btn btn-yellow btn-small btn-text btn-hug" routerLink="/book/{{book?.id}}/new/chapter">
                         <fa-icon [icon]="faPlus"></fa-icon>  New Chapter
                     </button>
         
@@ -20,9 +20,6 @@
             </div>
             
             <div class="book-wallpaper-container">
-                <!-- <img class="book-wallpaper-container--wallpaper" src="/images/wallpaper/welcome.png" alt="book wallpaper"/> -->
-
-                
                 <div class="book-wallpaper-container--wallpaper">
                     <fa-icon *ngIf="!book?.wallpaper || typeof book?.wallpaper != 'string'" [icon]="faImage" class="fa-7x"></fa-icon>
                     <img *ngIf="book?.wallpaper && typeof book?.wallpaper == 'string'" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
@@ -35,9 +32,10 @@
                     </button>
     
                     <button class="btn btn-pink btn-medium btn-hug" (click)="changeLikeBook()">
-                        <fa-icon *ngIf="!book?.liked" [icon]="faHeartOutline"></fa-icon>
-                        <fa-icon *ngIf="book?.liked" [icon]="faHeartFull"></fa-icon>
-                        
+                        <fa-icon *ngIf="!book?.userLiked" [icon]="faHeartOutline"></fa-icon> 
+                        <fa-icon *ngIf="book?.userLiked" [icon]="faHeartFull"></fa-icon>
+                        {{book?.likes || 0}}
+                        Likes
                     </button>
                 </div>
             </div>
@@ -73,22 +71,23 @@
         </div>
 
         <div class="chapters-container" *ngIf="chapters && chapters.length > 0">
-            <div class="chapter-card-container" *ngFor="let item of chapters; let i = index" routerLink="/book/{{book?.id}}/chapter/{{item?.id}}"> 
-                <div class="chapter-card">
-                    <h3 class="no-margins">{{i + 1}}</h3>
-                    <div class="chapter-card--content">
-                        <div class="chapter-card--bodyContent">
-                            <p class="chapter-card--title">{{item.title}}</p>
-                            <p class="chapter-card--body">{{item.content}}</p>
-                        </div>
+            <div class="chapter-card" [ngClass]="{'read': item.read }"  *ngFor="let item of chapters; let i = index" routerLink="/book/{{book?.id}}/chapter/{{item?.id}}"> 
+                <h3 class="chapter-card--number no-margins">{{i + 1}}</h3>
 
-                        <div class="chapter-card--info">
-                            <p class="no-margins">Created {{book?.createdAt}}</p>
-                            <div></div>
-                            <p class="no-margins">Last Update {{book?.updatedAt}}</p>
-                        </div>
+                <div class="chapter-card--content">
+                    <div class="chapter-card--bodyContent">
+                        <p class="chapter-card--title">{{item.title}}</p>
+                        <p class="chapter-card--body">{{item.content}}</p>
                     </div>
-                </div>  
+
+                    <div class="chapter-card--info">
+                        <p class="no-margins">Created {{item?.createdAt}}</p>
+                        <div></div>
+                        <p class="no-margins">Last Update {{item?.updatedAt}}</p>
+                        <div *ngIf="item?.read"></div>
+                        <p *ngIf="item?.read" class="no-margins">Read</p>
+                    </div>
+                </div>
             </div>
         </div>
 

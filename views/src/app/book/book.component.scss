@@ -139,6 +139,17 @@
     &:focus {
         background-color: #E6E6E6;
     }
+
+    &.read {
+        background-color: #f3f3f3;
+
+    }
+    &.read .chapter-card--title,
+    &.read .chapter-card--body,
+    &.read .chapter-card--number,
+    &.read .chapter-card--info{
+        color: #999999;
+    }
 }
 
 .chapter-card--title {

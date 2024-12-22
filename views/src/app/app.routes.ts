@@ -28,7 +28,7 @@ export const routes: Routes = [
         component: ChapterComponent,
     },
     {
-        path: 'book/:bookId/chapter/new',
+        path: 'book/:bookId/new/chapter',
         component: NewChapterComponent
     },
     {

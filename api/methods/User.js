@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../db/sequelize');
 const Book = require('./Book');
+const Chapter = require('./Chapter');
 
 const User = sequelize.define("User", {
     id: {
@@ -30,17 +31,20 @@ const User = sequelize.define("User", {
 });
 
 User.hasMany(Book, {
-    foreignKey: 'read',
-    as: 'read'
+    foreignKey: 'readBook',
+    as: 'readBook'
 });
 
 User.hasMany(Book, {
-    foreignKey: 'liked',
-    as: 'liked'
+    foreignKey: 'likes',
+    as: 'likes'
 });
 
-// Book.hasMany(User, {
-//     foreignKey: 'readBy',
-// });
+
+User.hasMany(Chapter, {
+    foreignKey: 'readChapter',
+    as: 'readChapter'
+});
+
 
 module.exports = User;

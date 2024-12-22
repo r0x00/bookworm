@@ -5,6 +5,7 @@ export interface Chapter {
     views: number,
     updatedAt: string,
     createdAt: string,
-    chapterNumber: number
+    chapterNumber: number,
+    read: boolean
 };
   

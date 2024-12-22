@@ -28,16 +28,22 @@ class BookServices {
             if(userId) {
                 const user = await User.findOne( { where: { id: userId }});
 
-                const alreadyRead = await user.hasRead(id);
+                const alreadyRead = await user.hasReadBook(id);
 
                 if(!alreadyRead) {
-                    await user.addRead(id);
+                    await user.addReadBook(id);
 
                     await Book.update({ views: result.views + 1 }, { where: { id: id }});
                 };
 
-                result.liked = await user.hasLiked(id);
+                result.dataValues.userLiked = await user.hasLikes(id);
             };
+
+            const likes = await User.count({
+                include: [ { model: Book, as: 'likes', attributes: [ 'id' ], where: { id: id } } ] 
+            });
+
+            result.dataValues.likes = likes;
 
             res.send(result);
 
@@ -115,10 +121,10 @@ class BookServices {
             
             const user = await User.findOne({ where: { id: req.session?.passport?.user?.id }});
 
-            const bookLike = await user.hasLiked(id);
+            const bookLike = await user.hasLikes(id);
 
-            if(!bookLike) await user.addLiked(id);
-            else await user.removeLiked(id);
+            if(!bookLike) await user.addLikes(id);
+            else await user.removeLikes(id);
 
             res.status(200).send();
 
