@@ -14,6 +14,7 @@ export interface Book {
     updatedAt: string,
     createdAt: string,
     likes: number,
-    userLiked: boolean
+    userLiked: boolean,
+    createdBy: string
 };
   

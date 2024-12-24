@@ -8,6 +8,7 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
+import { UserProfileService } from '../services/user-profile.service';
 @Component({
   selector: 'app-login',
   imports: [ RouterLink, RouterLinkActive, ReactiveFormsModule, FontAwesomeModule, CommonModule ],
@@ -28,12 +29,11 @@ export class LoginComponent {
     private readonly toastr: ToastrService, 
     private readonly el: ElementRef, 
     private readonly router: Router,
-    private readonly CookieService: CookieService
+    private readonly CookieService: CookieService,
+    private readonly UserProfileService: UserProfileService
   ) {};
 
   ngAfterViewInit() {
-
-
     this.focusInput();
   };
 
@@ -51,8 +51,7 @@ export class LoginComponent {
         this.CookieService.set('session', res.user);
         this.router.navigate([res.redirect]);
 
-        console.log(res)
-
+        this.UserProfileService.setUserProfile(res.user);
       },
 
       error: (_error) => {

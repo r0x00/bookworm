@@ -1,0 +1,135 @@
+.page-title.principal {
+    margin-bottom: 50px;
+}
+
+.profile-top {
+    display: flex;
+    gap: 30px;
+    padding: 30px 50px;
+    border-radius: var(--border-radius);
+    border: 1px solid #F0F0F0;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-direction: column;
+    text-align: center;
+}
+
+@media (min-width: 600px) {
+    .profile-top {
+        flex-direction: row;
+        text-align: unset;
+        gap: 40px;
+    }
+
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    background-color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image p {
+    font-size: 50px;
+    color: #fff;
+}
+
+.profile-bottom {
+    border-radius: var(--border-radius);
+    border: 1px solid #F0F0F0;
+    padding: 50px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+}
+
+.form-container--btns,
+.books-tabs {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.books-tabs {
+    margin-bottom: 50px;
+}
+
+@media (min-width: 650px) {
+    .books-tabs {
+        flex-direction: row;
+    }
+}
+
+
+@media (min-width: 700px) {
+    .form-container--btns,
+    .books-tabs {
+        max-width: 270px;
+        flex-direction: row;
+        align-self: flex-end;
+    }
+}
+
+.profile-container {
+    margin-bottom: 50px;
+}
+
+.books-container {
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.book-container {
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    flex-direction: column;
+
+    &:hover {
+        background-color: #F0F0F0;
+    }
+}
+
+
+.book-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.book-top-container {
+    width: 100%;
+}
+
+.book-information {
+    flex-wrap: wrap;
+}
+
+@media (min-width: 700px) {
+    .book-container {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    
+    .book-image-container {
+        height: 155px;
+        width: 302px;
+    }
+
+
+    .book-top-container {
+        width: unset;
+    }
+}

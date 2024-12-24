@@ -26,7 +26,7 @@ class ChapterServices {
             if(pagination.maxPages != 0 && pagination.page > pagination.maxPages) return res.status(404).send("You reached the last page");
             if(pagination.page < 1) return res.status(404).send("You reached the first page");
 
-            const result = await Chapter.findAll({ where: { book: book } }, {
+            const result = await Chapter.findAll({ where: { book: book }, attributes: { exclude: [ 'content' ] }}, {
                 skip: (pagination.page - 1) * pagination.limit,
                 limit: pagination.limit
             });
@@ -40,8 +40,6 @@ class ChapterServices {
             const chapters = [];
 
             for await (let chapter of result) {
-                chapter.content = chapter.content.slice(0, 200) + '...';
-
                 if(userId) {
                     const alreadyRead = await user.hasReadChapter(chapter.id);
 
@@ -118,18 +116,31 @@ class ChapterServices {
 
     static async create (req, res, next) {
         try {
-            const { book, title, content } = req.body;
+            const { book, title, content, summary } = req.body;
 
             if(!book) return res.status(400).send("Please add book ID");
+
+            const checkBook = await Book.findOne({ where: { id: book } });
+
+            if(!checkBook) return res.status(400).send("Book not found");
+
+            const userId = req.session?.passport?.user?.id;
+
+            if(checkBook.createdBy != userId) return res.status(400).send("You can't add chapter to this book");
 
             if(!title) return res.status(400).send("Please add chapter title");
 
             if(!content) return res.status(400).send("Please add content");
 
+            if(!summary) return res.status(400).send("Please add summary");
+
+            let summaryShortned = summary.slice(0, 200);
+
             const result = await Chapter.create({
                 book,
                 title,
-                content
+                content,
+                summary: summaryShortned
             });
 
             res.send(result);

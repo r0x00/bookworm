@@ -1,5 +1,7 @@
 const User = require('../methods/User');
 const Passport = require('../methods/Passport');
+const Chapter = require('../methods/Chapter');
+const Book = require('../methods/Book');
 
 class UserServices {
     static async load (req, res, next) {
@@ -83,6 +85,15 @@ class UserServices {
             const { id } = req.body;
 
             if(!id) return res.status(400).send("Please add user ID");
+
+            const user = await User.findOne({ where: { id: id } });
+
+            if(!user) return res.status(400).send("User not found");
+
+
+            await Chapter.destroy({ where: { book: id }});
+            await Book.destroy({ where: { id: id } });
+
 
             await User.destroy({ where: { id: id } });
 

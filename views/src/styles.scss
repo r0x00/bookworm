@@ -212,6 +212,9 @@ button {
     $green-61: #58E850;
     $green-73: #99DC96;
 
+    &:disabled {
+        cursor: not-allowed;
+    }
 
     // -- btn-blue
 

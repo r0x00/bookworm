@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Book } from '../models/book.models';
+import Quill, { Delta } from 'quill';
 
 @Component({
   selector: 'app-chapter',
@@ -53,7 +54,7 @@ export class ChapterComponent {
         this.nextChapterId = res.nearChapterInfo.next?.id;
         this.prevChapterId = res.nearChapterInfo.prev?.id;
 
-        console.log(res.nearChapterInfo)
+        this.startQuill()
       },
       error: (_error) => {
         this.router.navigate(["/book/" + this.bookId + '/view']);
@@ -93,5 +94,29 @@ export class ChapterComponent {
     const selectText = window.getSelection()?.toString() ?? '';
 
     this.translateSelected(selectText);
-  }
+  };
+
+  startQuill(): void {
+    const quill = new Quill("#quill-editor", {
+      theme: "",
+      modules: {
+        toolbar: false
+      }
+    });
+
+    try {
+      const text = JSON.parse(this.chapter?.content ?? '');
+      quill.setContents(text);
+
+    } catch (_error) {
+      const text = this.chapter?.content ?? '';
+      quill.setText(text);
+    };
+
+    quill.disable();
+
+    const qlEditorDiv = document.getElementById("quill-editor")?.querySelector(".ql-editor");
+
+    if(qlEditorDiv) qlEditorDiv?.classList.remove("ql-editor");
+  };
 }

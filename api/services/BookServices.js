@@ -1,4 +1,5 @@
 const Book = require('../methods/Book');
+const Chapter = require('../methods/Chapter');
 const User = require('../methods/User');
 
 class BookServices {
@@ -19,9 +20,11 @@ class BookServices {
 
             if(!id) return res.status(400).send("Please add book ID");
 
-            const result = await Book.findOne({ where: { id: id} });
+            const result = await Book.findOne({ where: { id: id } });
 
             if(!result) return res.status(400).send("Book not found");
+
+            console.log(result)
             
             const userId = req.session?.passport?.user?.id;
 
@@ -48,6 +51,7 @@ class BookServices {
             res.send(result);
 
         } catch(_error) {
+            console.log(_error)
             res.status(500).send(_error.message);
         };
     };
@@ -58,12 +62,17 @@ class BookServices {
 
             if(!name) return res.status(400).send("Please add book name");
 
+            const userId = req.session?.passport?.user?.id;
+
+            if(!userId) return res.status(400).send("Please login");
+
             const result = await Book.create({
                 name,
                 description,
                 author,
                 type,
-                wallpaper
+                wallpaper,
+                createdBy: userId
             });
 
             res.send(result);
@@ -103,6 +112,11 @@ class BookServices {
 
             if(!id) return res.status(400).send("Please add book ID");
 
+            const book = await Book.findOne({ where: { id: id } });
+
+            if(!book) return res.status(400).send("Book not found");
+
+            await Chapter.destroy({ where: { book: id }});
             await Book.destroy({ where: { id: id } });
 
             res.send();

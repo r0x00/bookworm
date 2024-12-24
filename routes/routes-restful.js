@@ -186,6 +186,16 @@ routes.me = {
         services: MeService,
         method: "loadBookRead"
     },
+
+    "get /me/books/saved": {
+        services: MeService,
+        method: "loadBookSaved"
+    },
+
+    "get /me/books/created": {
+        services: MeService,
+        method: "loadBookCreated"
+    },
 };
 
 _.each(routes, (v, k) => {

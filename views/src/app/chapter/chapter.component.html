@@ -3,7 +3,9 @@
 
     <h2 class="page-title">{{chapter?.title}} {{(chapter?.chapterNumber || 0) + 1}}</h2>
 
-    <p class="chapter-content" (mouseup)="mouseup()">{{chapter?.content}}</p>
+    <!-- <p class="chapter-content" (mouseup)="mouseup()">{{chapter?.content}}</p> -->
+
+    <div id="quill-editor" class="quill-editor chapter-content" (mouseup)="mouseup()"></div>
 
     <div class="btns-container">
         <button class="btn btn-gray btn-big" (click)="prevChapter()" [disabled]="!this.prevChapterId || this.prevChapterId == ''">Previous</button>

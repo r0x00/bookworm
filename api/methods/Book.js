@@ -53,7 +53,8 @@ const Book = sequelize.define('Book', {
 
 
 Book.hasMany(Chapter, {
-    foreignKey: 'chapter',
+    foreignKey: 'book',
+    as: 'bookChapters'
 });
 
 Chapter.belongsTo(Book, { 

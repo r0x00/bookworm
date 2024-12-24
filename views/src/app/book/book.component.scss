@@ -114,15 +114,15 @@
 
 .chapters-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(638px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 25px;
     margin-bottom: 45px;
 }
 
-.card-chapter-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(638px, 1fr));
-    gap: 25px;
+@media (min-width: 700px) {
+    .chapters-container {
+        grid-template-columns: repeat(auto-fill, minmax(638px, 1fr));
+    }
 }
 
 .chapter-card {
@@ -192,6 +192,7 @@
     color: #999999;
     letter-spacing: .8px;
     line-height: 21px;
+    flex-wrap: wrap;
 
     & div {
         width: 2px;

@@ -25,6 +25,11 @@ const Chapter = sequelize.define('chapter', {
         }
     },
 
+    summary: {
+        type: DataTypes.TEXT,
+        required: true,
+    },
+
     views: {
         type: DataTypes.INTEGER
     }

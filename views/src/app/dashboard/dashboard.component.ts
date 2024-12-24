@@ -25,7 +25,10 @@ export class DashboardComponent {
 
   faImage = faImage;
 
-  constructor(private readonly http: HttpClient, private readonly toastr:ToastrService) {};
+  constructor(
+    private readonly http: HttpClient, 
+    private readonly toastr:ToastrService
+  ) {};
 
   ngAfterViewInit () {
     this.loadBooks();

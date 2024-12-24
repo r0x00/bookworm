@@ -40,10 +40,18 @@ User.hasMany(Book, {
     as: 'likes'
 });
 
-
 User.hasMany(Chapter, {
     foreignKey: 'readChapter',
     as: 'readChapter'
+});
+
+User.hasMany(Book, {
+    foreignKey: 'createdBy',
+    as: 'booksCreated'
+});
+
+Book.belongsTo(User, {
+    foreignKey: 'createdBy',
 });
 
 

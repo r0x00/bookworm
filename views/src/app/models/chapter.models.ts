@@ -6,6 +6,7 @@ export interface Chapter {
     updatedAt: string,
     createdAt: string,
     chapterNumber: number,
-    read: boolean
+    read: boolean,
+    summary: string,
 };
   

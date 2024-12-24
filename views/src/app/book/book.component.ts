@@ -10,6 +10,9 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import moment from 'moment';
 import { Chapter } from '../models/chapter.models';
 import { Pagination } from '../models/pagination.models';
+import { UserProfileService } from '../services/user-profile.service';
+import { User } from '../models/user.models';
+
 
 
 @Component({
@@ -23,6 +26,8 @@ export class BookComponent {
   book: Book | null = null;
   chapters: Chapter[] | null = null;
   chaptersPagination: Pagination | null = null;
+  userProfile: User | null = null;  
+  isCreatedByUser: boolean = false;
 
   faPlus = faPlus;
   faPenNib = faPenNib;
@@ -37,7 +42,12 @@ export class BookComponent {
     private readonly router: Router, 
     private readonly route: ActivatedRoute, 
     private readonly toastr: ToastrService,
+    private readonly UserProfileService: UserProfileService,
   ) {}
+
+  ngOnInit(): void {
+    this.loadProfile();
+  };
 
   ngAfterViewInit(): void {
     this.bookId = this.route.snapshot.paramMap.get('id');
@@ -56,9 +66,10 @@ export class BookComponent {
           this.book.updatedAt = moment(this.book?.updatedAt).format("DD/MM/YYYY");
         };
 
-        console.log(res)
-
+        console.log(this.book)
         this.loadChapters();
+
+        this.isCreatedByUser = !!this.userProfile && this.userProfile?.id == this.book?.createdBy;
       },
       error: (_error) => {
         this.toastr.error("It was not possible to load book","Ops! Something happened!");
@@ -126,7 +137,7 @@ export class BookComponent {
   };
 
   changeLikeBook(): void {
-    if(!this.book) return;
+    if(!this.book || !this.userProfile) return;
 
     const liked_temp = this.book.userLiked;
     const likes_temp = this.book.likes;
@@ -150,7 +161,14 @@ export class BookComponent {
   };
 
   playLastChapter(): void {
+    if(!this.userProfile) return;
 
+  };
+
+  loadProfile(): void {
+    this.UserProfileService.userProfile$.subscribe(profile => {
+      this.userProfile = profile;
+    });
   };
 
 };

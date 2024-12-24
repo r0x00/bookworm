@@ -1,1 +1,133 @@
-<p>me works!</p>
+<div class="main-container">
+    <h2 class="page-title principal">Me</h2>
+
+    <div class="profile-container">
+        <div class="profile-top">
+            <div class="profile-image">
+                <p class="no-margins">{{me?.username?.[0]?.toUpperCase()}}</p>
+            </div>
+
+            <div>
+                <h2 class="page-title">{{me?.username}}</h2>
+                <p class="no-margins">{{me?.username}}</p>
+            </div>
+        </div>
+
+
+        <form class="profile-bottom" [formGroup]="meForm" (ngSubmit)="update()">
+            <div class="input-container">
+                <label for="username" class="input-container--label">Username</label>
+    
+                <input id="username" type="text" formControlName="username" focus>
+    
+                <div class="input-warning" *ngIf="meForm.get('username')?.dirty && meForm.get('username')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+        
+                    <div class="input-waning-texts">
+                        <p *ngIf="meForm.get('username')?.hasError('required')" class="no-margins">A username is required</p>
+                        <p *ngIf="meForm.get('username')?.hasError('minlength')" class="no-margins">The username must be at least 5 characters long</p>
+                        <p *ngIf="meForm.get('username')?.hasError('maxlength')" class="no-margins">The username must not be longer than 120 characters</p> 
+                    </div>
+                </div>
+            </div>
+    
+            <div class="input-container">
+                <label for="email" class="input-container--label">Email</label>
+
+                <input id="email" type="text" formControlName="email">
+
+                <div class="input-warning" *ngIf="meForm.get('email')?.dirty && meForm.get('email')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+
+                    <div class="input-waning-texts">
+                        <p *ngIf="meForm.get('email')?.hasError('required')" class="no-margins">A email is required</p>
+                        <p *ngIf="meForm.get('email')?.hasError('email')" class="no-margins">Please enter a valid email address</p>
+                        <p *ngIf="meForm.get('email')?.hasError('minlength')" class="no-margins">The email must be at least 3 characters long</p>
+                        <p *ngIf="meForm.get('email')?.hasError('maxlength')" class="no-margins">The email must not be longer than 120 characters</p> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="password" class="input-container--label">Password</label>
+
+                <input id="password" type="password" formControlName="password">
+
+                <div class="input-warning" *ngIf="meForm.get('password')?.dirty && meForm.get('password')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+
+                    <div class="input-waning-texts">
+                        <p *ngIf="meForm.get('password')?.hasError('required')" class="no-margins">A password is required</p>
+                        <p *ngIf="meForm.get('password')?.hasError('minlength')" class="no-margins">The password must be at least 3 characters long</p>
+                        <p *ngIf="meForm.get('password')?.hasError('maxlength')" class="no-margins">The password must not be longer than 120 characters</p> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="confirmPassword" class="input-container--label">Confirm Password</label>
+
+                <input id="confirmPassword" type="password" formControlName="confirmPassword">
+
+                <div class="input-warning" *ngIf="meForm.get('confirmPassword')?.dirty && (meForm.get('confirmPassword')?.invalid || meForm.hasError('valuesDontMatch'))">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+
+                    <div class="input-waning-texts">
+                        <p *ngIf="meForm.get('confirmPassword')?.hasError('required')" class="no-margins">A confirm password is required</p>    
+                        <p *ngIf="meForm.hasError('valuesDontMatch')" class="no-margins">Passwords do not match</p> 
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="form-container--btns">
+                <button class="btn btn-green" type="submit"  [disabled]="!meForm.valid">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+    <div>
+        <div class="books-tabs">
+            <button class="btn btn-blue" [ngClass]="{ 'btn-grey': selectedBookTab != 'myBooks' }"  (click)="loadBooks('myBooks')">My books</button>
+            <button class="btn btn-blue" [ngClass]="{ 'btn-grey': selectedBookTab != 'savedBooks' }"  (click)="loadBooks('savedBooks')">Saved</button>
+        </div>
+
+        <div class="books-container">
+            <div *ngIf="books.length == 0" class="notfound-container">
+                <p class="no-margins">no books found</p>
+            </div>
+
+            <div class="book-container" *ngFor="let item of books; let i = index">
+                <div class="book-top-container">
+                    <div class="book-status" *ngIf="item.finished">
+                        <p>Finished</p>
+                    </div>
+
+
+                    <div class="book-image-container">
+                        <fa-icon *ngIf="!item.wallpaper || typeof item.wallpaper != 'string'" [icon]="faImage" class="fa-4x"></fa-icon>
+                        <img *ngIf="item.wallpaper && typeof item.wallpaper == 'string'" class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
+                    </div>
+                </div>
+
+                <div class="book-content-container">
+                    <div class="book-content">
+                        <p class="no-margins book-title">{{item.name}}</p>
+                        <p class="no-margins book-description">{{item.description}}</p>
+                    </div>
+    
+                    <div class="book-information">
+                        <p class="no-margins">Last update {{item.updatedAt}}</p>
+                        <div></div>
+                        <p class="no-margins">{{item.chapters || 0}} chapters</p>
+                        <div></div>
+                        <p class="no-margins">{{item.views || 0}} views</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

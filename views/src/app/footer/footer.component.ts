@@ -14,7 +14,10 @@ export class FooterComponent {
   copyright = "convergint@" + new Date().getFullYear();
   isNotLogin = true;
   
-  constructor(private readonly http: HttpClient, private readonly router: Router) {};
+  constructor(
+    private readonly http: HttpClient, 
+    private readonly router: Router
+  ) {};
 
   ngOnInit():void {
     this.version();

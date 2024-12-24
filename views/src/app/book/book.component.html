@@ -3,15 +3,15 @@
         <div class="book-container-info">
             <div class="book-container-info--top">
                 <div class="book-btn-actions-container">
-                    <button class="btn btn-yellow btn-small btn-text btn-hug" routerLink="/book/{{book?.id}}/new/chapter">
+                    <button class="btn btn-yellow btn-small btn-text btn-hug" *ngIf="isCreatedByUser" routerLink="/book/{{book?.id}}/new/chapter">
                         <fa-icon [icon]="faPlus"></fa-icon>  New Chapter
                     </button>
         
-                    <button class="btn btn-blue btn-small btn-text btn-hug" (click)="editBook()">
+                    <button class="btn btn-blue btn-small btn-text btn-hug" *ngIf="isCreatedByUser" (click)="editBook()">
                         <fa-icon [icon]="faPenNib"></fa-icon>  Edit
                     </button>
         
-                    <button class="btn btn-red btn-small btn-text btn-hug" (click)="deleteBook()">
+                    <button class="btn btn-red btn-small btn-text btn-hug" *ngIf="isCreatedByUser" (click)="deleteBook()">
                         <fa-icon [icon]="faTrash"></fa-icon>  Delete
                     </button>
                 </div>
@@ -27,11 +27,11 @@
                 
     
                 <div class="book-wallpaper-container--btns">
-                    <button class="btn btn-black btn-hug" (click)="playLastChapter()">
+                    <button [disabled]="!userProfile" class="btn btn-black btn-hug" (click)="playLastChapter()">
                         <fa-icon [icon]="faPlay"></fa-icon>
                     </button>
     
-                    <button class="btn btn-pink btn-medium btn-hug" (click)="changeLikeBook()">
+                    <button [disabled]="!userProfile" class="btn btn-pink btn-medium btn-hug" (click)="changeLikeBook()">
                         <fa-icon *ngIf="!book?.userLiked" [icon]="faHeartOutline"></fa-icon> 
                         <fa-icon *ngIf="book?.userLiked" [icon]="faHeartFull"></fa-icon>
                         {{book?.likes || 0}}
@@ -77,7 +77,7 @@
                 <div class="chapter-card--content">
                     <div class="chapter-card--bodyContent">
                         <p class="chapter-card--title">{{item.title}}</p>
-                        <p class="chapter-card--body">{{item.content}}</p>
+                        <p class="chapter-card--body">{{item.summary}}</p>
                     </div>
 
                     <div class="chapter-card--info">
