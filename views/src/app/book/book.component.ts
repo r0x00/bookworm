@@ -66,7 +66,6 @@ export class BookComponent {
           this.book.updatedAt = moment(this.book?.updatedAt).format("DD/MM/YYYY");
         };
 
-        console.log(this.book)
         this.loadChapters();
 
         this.isCreatedByUser = !!this.userProfile && this.userProfile?.id == this.book?.createdBy;
@@ -116,11 +115,6 @@ export class BookComponent {
     const page: number = pageValues[pageType as keyof typeof pageValues] ?? pageValues["default"];
 
     this.loadChapters(page);
-  };
-
-  editBook(): void {
-    console.log("edit")
-
   };
 
   deleteBook(): void {

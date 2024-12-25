@@ -8,6 +8,9 @@ import { Showcase } from '../models/showcase.models';
 import moment from 'moment';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
+import { faEllipsisVertical, faPenNib, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { UserProfileService } from '../services/user-profile.service';
+import { User } from '../models/user.models';
 
 
 @Component({
@@ -22,12 +25,19 @@ export class DashboardComponent {
   showcaseItems: Showcase[] = [];
   showcaseInterval: any;
   lastReadItems: Book[] = [];
+  currentBookMenu: Book | null = null;
+  userProfile: User | null = null;  
 
   faImage = faImage;
+  faEllipsisVertical = faEllipsisVertical;
+  faPlus = faPlus;
+  faPenNib = faPenNib;
+  faTrash = faTrash;
 
   constructor(
     private readonly http: HttpClient, 
-    private readonly toastr:ToastrService
+    private readonly toastr:ToastrService,
+    private readonly UserProfileService: UserProfileService
   ) {};
 
   ngAfterViewInit () {
@@ -35,15 +45,19 @@ export class DashboardComponent {
     this.loadShowcase();
     this.changeShowcase();
     this.loadLastRead();
+    this.loadProfile();
   };
 
   loadBooks (): void {
+    this.bookItems = [];
+
     this.http.get('/api/book').subscribe({
       next: (res: any) => {
         this.bookItems = res.map((item: Book) => {
           item.createdAt = moment(item.createdAt).format("DD/MM/YYYY"); 
           item.updatedAt = moment(item.updatedAt).format("DD/MM/YYYY");
 
+          item.isCreatedByUser = !!this.userProfile && this.userProfile?.id == item?.createdBy;
           return item;
         });
       },
@@ -55,13 +69,17 @@ export class DashboardComponent {
   };
 
   loadLastRead (): void {
+    this.lastReadItems = [];
+
     this.http.get('/api/me/books/read').subscribe({
       next: (res: any) => {
-        console.log(res)
         if(res) {
           this.lastReadItems = res.map((item: Book) => {
             item.createdAt = moment(item.createdAt).format("DD/MM/YYYY"); 
             item.updatedAt = moment(item.updatedAt).format("DD/MM/YYYY");
+
+
+            item.isCreatedByUser = !!this.userProfile && this.userProfile?.id == item?.createdBy;
   
             return item;
           });
@@ -98,5 +116,37 @@ export class DashboardComponent {
       this.focusedItem = 0;
 
     }, 1000 * 10); //10 seconds
+  };
+
+  toggleMenu(event: Event, item: Book): void {
+    event.stopImmediatePropagation();
+
+    item.openMenu = !item.openMenu;
+    this.currentBookMenu = item;
+
+    if(!item.openMenu) this.currentBookMenu = null;
+  };
+
+  deleteBook(id: string): void {
+    this.http.delete("/api/book", { body: { id: id } }).subscribe({
+      next: () => {
+        this.toastr.success("Book was deleted with success!","Success!");
+        this.loadBooks();
+        this.loadLastRead();
+      },
+
+      error: (_error) => {
+        this.toastr.error("It was not possible to delete book","Ops! Something happened!");
+      }
+    });
+  };
+
+  loadProfile(): void {
+    this.UserProfileService.userProfile$.subscribe(profile => {
+      this.userProfile = profile;
+
+      this.loadBooks();
+      this.loadLastRead();
+    });
   };
 }

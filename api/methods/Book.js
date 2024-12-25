@@ -33,7 +33,7 @@ const Book = sequelize.define('Book', {
         }
     },
 
-    type: {
+    types: {
         type: DataTypes.JSON
     },
 

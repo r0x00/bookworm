@@ -5,7 +5,7 @@ export interface Book {
     name: string, 
     description: string,
     author: string,
-    type: [],
+    types: [],
     views: number,
     finished: boolean,
     wallpaper: Blob,
@@ -15,6 +15,8 @@ export interface Book {
     createdAt: string,
     likes: number,
     userLiked: boolean,
-    createdBy: string
+    createdBy: string,
+    openMenu: boolean,
+    isCreatedByUser: boolean
 };
   

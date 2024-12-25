@@ -41,7 +41,7 @@ class AuthServices {
         req.logout(function(_error) {
             if (_error) return next(_error);
 
-            res.redirect('/');
+            res.send();
         });
     };
 };

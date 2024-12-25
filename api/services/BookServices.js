@@ -58,7 +58,7 @@ class BookServices {
 
     static async create (req, res, next) {
         try {
-            const { name, description, author, type, wallpaper } = req.body;
+            const { name, description, author, types, wallpaper } = req.body;
 
             if(!name) return res.status(400).send("Please add book name");
 
@@ -70,7 +70,7 @@ class BookServices {
                 name,
                 description,
                 author,
-                type,
+                types,
                 wallpaper,
                 createdBy: userId
             });
@@ -84,7 +84,7 @@ class BookServices {
 
     static async update (req, res, next) {
         try {
-            const { id, name, description, author, type, wallpaper, finished } = req.body;
+            const { id, name, description, author, types, wallpaper, finished } = req.body;
 
             if(!id) return res.status(400).send("Please add book ID");
 
@@ -94,7 +94,7 @@ class BookServices {
                 name,
                 description,
                 author,
-                type,
+                types,
                 wallpaper,
                 finished
             }, { where: { id: id } });

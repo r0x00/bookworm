@@ -7,7 +7,7 @@
                         <fa-icon [icon]="faPlus"></fa-icon>  New Chapter
                     </button>
         
-                    <button class="btn btn-blue btn-small btn-text btn-hug" *ngIf="isCreatedByUser" (click)="editBook()">
+                    <button class="btn btn-blue btn-small btn-text btn-hug" *ngIf="isCreatedByUser" routerLink="/book/{{book?.id}}/update">
                         <fa-icon [icon]="faPenNib"></fa-icon>  Edit
                     </button>
         
@@ -47,8 +47,8 @@
             <p class="book-info-container--author">{{book?.author}}</p>
         </div>
 
-        <div class="book-tag-container" *ngIf="book?.type">
-            <div class="book-tag"  *ngFor="let item of book?.type">{{item}}</div>
+        <div class="book-tag-container" *ngIf="book?.types">
+            <div class="book-tag"  *ngFor="let item of book?.types">{{item}}</div>
         </div>
 
         <div class="book-moreInfo-container">

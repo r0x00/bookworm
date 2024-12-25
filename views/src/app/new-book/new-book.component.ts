@@ -26,9 +26,12 @@ export class NewBookComponent {
     types: new FormControl('', [ Validators.required ]),
     wallpaper: new FormControl(''),
   });
-  
 
-  constructor(private readonly http: HttpClient, private readonly toastr: ToastrService, private readonly router: Router) {}
+  constructor(
+    private readonly http: HttpClient, 
+    private readonly toastr: ToastrService, 
+    private readonly router: Router
+  ) {};
 
   create(): void {
     if(this.bookCreate.invalid) return;
@@ -54,5 +57,5 @@ export class NewBookComponent {
         this.toastr.error("An error occurred when creating book.", "Ops! Something happened!");
       }
     })
-  }
+  };
 }

@@ -8,6 +8,7 @@ import { NewBookComponent } from './new-book/new-book.component';
 import { ChapterComponent } from './chapter/chapter.component';
 import { NewChapterComponent } from './new-chapter/new-chapter.component';
 import { MeComponent } from './me/me.component';
+import { UpdateBookComponent } from './update-book/update-book.component';
 
 export const routes: Routes = [
     { 
@@ -18,7 +19,10 @@ export const routes: Routes = [
         path: 'book/:id/view', 
         component: BookComponent,
     },
-
+    {
+        path: 'book/:id/update',
+        component:  UpdateBookComponent,
+    },
     {
         path: 'book/new',
         component: NewBookComponent,

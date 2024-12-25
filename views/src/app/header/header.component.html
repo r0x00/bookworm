@@ -11,11 +11,36 @@
         <input class="search" type="text" placeholder="search">
 
         <div class="me-container" *ngIf="userProfile">
-            <div class="me-profile" routerLink="/me">
+            <div class="me-profile" (click)="toggleProfileMenu()">
                 <span *ngIf="!userProfile?.src">A</span>
+            </div>
+
+            <div *ngIf="openMenuProfile" class="me-menu">
+                <div class="me-menu--profile">
+                    <div>
+                        <span *ngIf="!userProfile?.src">A</span>
+                    </div>
+
+                    <p class="no-margins">{{userProfile.username}}</p>
+
+                    
+                </div>
+
+                <div class="me-menu--divider"></div>
+                
+                <div class="me-menu--options">
+                    <div routerLink="/me" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="toggleProfileMenu()" class="me-menu--option">
+                        <p>Profile</p>
+                    </div>
+                    <div (click)="logout()" class="me-menu--option">
+                        <p>Logout</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <a *ngIf="!userProfile" class="login-link" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">Login</a>
     </div>
+
+    <div *ngIf="openMenuProfile" class="me-menu--background" (click)="toggleProfileMenu()"></div>
 </div>

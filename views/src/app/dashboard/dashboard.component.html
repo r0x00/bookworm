@@ -28,13 +28,40 @@
                             <p>Finished</p>
                         </div>
 
-
                         <div class="book-image-container">
                             <fa-icon *ngIf="!item.wallpaper || typeof item.wallpaper != 'string'" [icon]="faImage" class="fa-4x"></fa-icon>
                             <img *ngIf="item.wallpaper && typeof item.wallpaper == 'string'" class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
                         </div>
-                        
 
+                        <div *ngIf="item.isCreatedByUser" class="menu">
+                            <div class="menu-btn" (click)="toggleMenu($event, item)">
+                                <fa-icon [icon]="faEllipsisVertical"></fa-icon>
+                            </div>
+    
+                            <div *ngIf="item.openMenu" class="menu--options" (click)="toggleMenu($event, item)">
+                                <div *ngIf="item.isCreatedByUser" class="menu--option" routerLink="/book/{{item?.id}}/new/chapter">
+                                    <p>
+                                        <fa-icon [icon]="faPlus"></fa-icon> 
+                                        New Chapter
+                                    </p>
+                                </div> 
+
+                                <div *ngIf="item.isCreatedByUser" class="menu--option" routerLink="/book/{{item?.id}}/update">
+                                    <p>
+                                        <fa-icon [icon]="faPenNib"></fa-icon>
+                                        Edit
+                                    </p>
+                                </div> 
+
+                                <div *ngIf="item.isCreatedByUser"class="menu--option" (click)="deleteBook(item?.id ?? '')">
+                                    <p>
+                                        <fa-icon [icon]="faTrash"></fa-icon> 
+                                        Delete
+                                    </p>
+                                </div> 
+
+                            </div>
+                        </div>
                     </div>
     
                     <div class="book-content">
@@ -75,7 +102,35 @@
                             <img *ngIf="item.wallpaper && typeof item.wallpaper == 'string'" class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
                         </div>
 
-                        
+                        <div *ngIf="item.isCreatedByUser" class="menu">
+                            <div class="menu-btn" (click)="toggleMenu($event, item)">
+                                <fa-icon [icon]="faEllipsisVertical"></fa-icon>
+                            </div>
+    
+                            <div *ngIf="item.openMenu" class="menu--options" (click)="toggleMenu($event, item)">
+                                <div  *ngIf="item.isCreatedByUser" class="menu--option" routerLink="/book/{{item?.id}}/new/chapter">
+                                    <p>
+                                        <fa-icon [icon]="faPlus"></fa-icon> 
+                                        New Chapter
+                                    </p>
+                                </div> 
+
+                                <div  *ngIf="item.isCreatedByUser" class="menu--option" routerLink="/book/{{item?.id}}/update">
+                                    <p>
+                                        <fa-icon [icon]="faPenNib"></fa-icon>
+                                        Edit
+                                    </p>
+                                </div> 
+
+                                <div  *ngIf="item.isCreatedByUser" class="menu--option" (click)="deleteBook(item?.id ?? '')">
+                                    <p>
+                                        <fa-icon [icon]="faTrash"></fa-icon> 
+                                        Delete
+                                    </p>
+                                </div> 
+
+                            </div>
+                        </div>
                     </div>
     
                     <div class="book-content">
@@ -94,4 +149,6 @@
             </div>
         </div>
     </div>
+
+    <div *ngIf="currentBookMenu" class="menu--background" (click)="toggleMenu($event, currentBookMenu)"></div>
 </div>

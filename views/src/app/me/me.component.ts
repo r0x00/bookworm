@@ -9,6 +9,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Book } from '../models/book.models';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import moment from 'moment';
+import { Router } from '@angular/router';
 
 enum BookTypes {
   myBooks = 'myBooks',
@@ -37,7 +38,11 @@ export class MeComponent {
   });
 
 
-  constructor(private readonly http: HttpClient, private readonly toastr: ToastrService) {}
+  constructor(
+    private readonly http: HttpClient, 
+    private readonly toastr: ToastrService,
+    private readonly router: Router
+  ) {}
 
   ngAfterViewInit(): void {
     this.showMe();
@@ -54,6 +59,7 @@ export class MeComponent {
       },
       error: (_error) => {
         this.toastr.error("It was not possible to your profile.","Ops! Something happened!");
+        this.router.navigate(['/']);
       }
     });
   };

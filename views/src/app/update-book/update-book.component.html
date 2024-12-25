@@ -1,0 +1,91 @@
+<div class="main-container">
+    <h2 class="page-title">Update Book</h2>
+
+    <form class="form-container" [formGroup]="bookUpdate" (ngSubmit)="update()">
+        <div class="form-container--top">
+            <h3 class="form-container--title">Form</h3>
+        </div>
+
+        <div class="form-container--body">
+            <div class="input-container">
+                <label for="name" class="input-container--label">Name</label>
+                <input id="name" type="text" formControlName="name" focus>
+    
+                <div class="input-warning" *ngIf="bookUpdate.get('name')?.dirty && bookUpdate.get('name')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="bookUpdate.get('name')?.hasError('required')" class="no-margins">A name is required</p>
+                        <p *ngIf="bookUpdate.get('name')?.hasError('minlength')" class="no-margins">The name must be at least 3 characters long</p>
+                        <p *ngIf="bookUpdate.get('name')?.hasError('maxlength')" class="no-margins">The name must not be longer than 120 characters</p> 
+                    </div>
+                </div>
+            </div>
+    
+            <div class="input-container">
+                <label for="description" class="input-container--label">Description</label>
+                <input id="description" type="text" formControlName="description" focus>
+    
+                <div class="input-warning" *ngIf="bookUpdate.get('description')?.dirty && bookUpdate.get('description')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="bookUpdate.get('description')?.hasError('minlength')" class="no-margins">The description must be at least 5 characters long</p>
+                        <p *ngIf="bookUpdate.get('description')?.hasError('maxlength')" class="no-margins">The description must not be longer than 300 characters</p> 
+                    </div>
+                </div>
+            </div>
+    
+            <div class="input-container">
+                <label for="author" class="input-container--label">Author</label>
+                <input id="author" type="text" formControlName="author" focus>
+    
+                <div class="input-warning" *ngIf="bookUpdate.get('author')?.dirty && bookUpdate.get('author')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="bookUpdate.get('author')?.hasError('minlength')" class="no-margins">The author must be at least 3 characters long</p>
+                        <p *ngIf="bookUpdate.get('author')?.hasError('maxlength')" class="no-margins">The author must not be longer than 120 characters</p> 
+                    </div>
+                </div>
+            </div>
+    
+            <div class="input-container">
+                <label for="types" class="input-container--label">Types</label>
+                <input id="types" type="text" formControlName="types" focus>
+    
+                <div class="input-warning" *ngIf="bookUpdate.get('types')?.dirty && bookUpdate.get('types')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="bookUpdate.get('types')?.hasError('required')" class="no-margins">A type is required</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="types" class="input-container--label">Wallpaper</label>
+                <input id="types" type="file" formControlName="wallpaper" accept="image/jpeg, image/png, image/gif">
+    
+                <div class="input-warning" *ngIf="bookUpdate.get('wallpaper')?.dirty && bookUpdate.get('wallpaper')?.invalid">
+                    <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                    <div class="input-waning-texts">
+                        <p *ngIf="bookUpdate.get('wallpaper')?.hasError('required')" class="no-margins">A type is required</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-container--btns">
+                <button class="btn btn-gray" routerLink="/book/{{bookId}}/view" routerLinkActive="active">
+                    Cancel
+                </button>
+    
+                <button class="btn btn-blue" type="submit" [disabled]="!bookUpdate.valid">
+                    Update
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
