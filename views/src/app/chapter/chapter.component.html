@@ -3,12 +3,26 @@
 
     <h2 class="page-title">{{chapter?.title}} {{(chapter?.chapterNumber || 0) + 1}}</h2>
 
-    <!-- <p class="chapter-content" (mouseup)="mouseup()">{{chapter?.content}}</p> -->
-
-    <div id="quill-editor" class="quill-editor chapter-content" (mouseup)="mouseup()"></div>
+    <div id="quill-editor" class="quill-editor chapter-content" (mouseup)="mouseup($event)"></div>
 
     <div class="btns-container">
         <button class="btn btn-gray btn-big" (click)="prevChapter()" [disabled]="!this.prevChapterId || this.prevChapterId == ''">Previous</button>
         <button class="btn btn-blue btn-big" (click)="nextChapter()" [disabled]="!this.nextChapterId || this.nextChapterId == ''">Next</button>
     </div>
+
+    <div *ngIf="startTranslation" [ngStyle]="{'top': translationCardPosition.y + 'px', 'left': translationCardPosition.x + 'px'}" class="translation-container">
+        <div class="translation-container--title">
+            Translation
+        </div>
+
+        <div class="translation-container--content">
+            <div *ngIf="!translatedContet" class="loader"></div>
+
+            <div *ngIf="translatedContet">
+                <p class="translated-contet">{{translatedContet}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="startTranslation" class="translation--background" (click)="startTranslation = false"></div>
 </div>

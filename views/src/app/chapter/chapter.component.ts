@@ -5,10 +5,11 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Book } from '../models/book.models';
 import Quill, { Delta } from 'quill';
+import { NgIf, NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-chapter',
-  imports: [ RouterLink, RouterLinkActive ],
+  imports: [ RouterLink, RouterLinkActive, NgIf, NgStyle ],
   templateUrl: './chapter.component.html',
   styleUrl: './chapter.component.scss'
 })
@@ -19,6 +20,14 @@ export class ChapterComponent {
   book: Book | null = null;
   nextChapterId: string = '';
   prevChapterId: string = '';
+  textTranslation: string = '';
+  translatedContet: string = '';
+  startTranslation: boolean = false;
+  translationTimeout: any;
+  translationCardPosition: {x: number, y: number} = {
+    y: 0,
+    x: 0
+  };
 
   constructor(
     private readonly http: HttpClient,
@@ -78,10 +87,11 @@ export class ChapterComponent {
 
   translateSelected(text: string): void {
     if(text == '' || text.replace(/\s/g, "") == '') return;
+    if(!this.startTranslation) return;
 
     this.http.get("/api/dictionary?query=" + text + "&languageFrom=en&languageTo=pt-br").subscribe({
       next: (res: any) => {
-        console.log(res)
+        this.translatedContet = res.translation;
       },
 
       error: (_error) => {
@@ -90,10 +100,42 @@ export class ChapterComponent {
     });
   };
 
-  mouseup(): void {
-    const selectText = window.getSelection()?.toString() ?? '';
+  mouseup(event: MouseEvent): void {
+    clearTimeout(this.translationTimeout);
 
-    this.translateSelected(selectText);
+    const windowY = window.scrollY ?? window.pageYOffset;
+ 
+    const cardX = 425
+    const isCardXOverflow = event.clientX + cardX > window.innerWidth;
+    const isCardXOverflowAllSides = event.clientX + cardX > window.innerWidth && event.clientX - cardX < window.innerWidth
+
+    this.translationCardPosition = {
+      x: isCardXOverflow ? event.clientX - cardX : event.clientX,
+      y: windowY + event.clientY
+    };
+
+    if(isCardXOverflowAllSides) this.translationCardPosition.x = 0;
+
+    this.startTranslation = window.getSelection()?.toString() != '';
+
+    this.translatedContet = '';
+
+    const timeout = setTimeout(() => {
+      const selectText = window.getSelection()?.toString() ?? '';
+
+      this.textTranslation = selectText;
+  
+      this.translateSelected(selectText);
+    }, 1000 * 2);
+
+    this.translationTimeout = timeout;
+  };
+
+  mousedown(event: MouseEvent): void {
+    this.translationCardPosition = {
+      x: event.clientX,
+      y: event.clientY
+    };
   };
 
   startQuill(): void {
