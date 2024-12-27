@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faPlus, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
-// import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { User } from '../models/user.models';
 import { UserProfileService } from '../services/user-profile.service';
 import { HttpClient } from '@angular/common/http';

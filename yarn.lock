@@ -1745,6 +1745,13 @@
     "@napi-rs/nice-win32-ia32-msvc" "1.0.1"
     "@napi-rs/nice-win32-x64-msvc" "1.0.1"
 
+"@ng-select/ng-select@^14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@ng-select/ng-select/-/ng-select-14.1.0.tgz#f90a8cd5a90c8644a8d0208e293ee97db3d96e94"
+  integrity sha512-cE/e7WIqLAgUF83mpmDWbgmy7OvzWTjCTjtcIzhabRbhN0RDqp7u39noC12kSN+viAfYnA1TS7rBru+IouNt1g==
+  dependencies:
+    tslib "^2.3.1"
+
 "@ngtools/webpack@19.0.1":
   version "19.0.1"
   resolved "https://registry.yarnpkg.com/@ngtools/webpack/-/webpack-19.0.1.tgz#803463b48099da63d79c1bc48d4adf0b889abdde"
@@ -6144,6 +6151,21 @@ neo-async@^2.6.2:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.2.tgz#b4aafb93e3aeb2d8174ca53cf163ab7d7308305f"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+ng2-material-dropdown@>=1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ng2-material-dropdown/-/ng2-material-dropdown-1.0.0.tgz#1d8a5ff5926fcf0b64a2094a36fcfeb54f08fb43"
+  integrity sha512-waKgEkKQwGZT0dqRAd3ZW+wueYs5Xw9owiPBSMdg5jru5DcKDpUqFaADMqqI7HPuzJCxNJSln6nXX1tMYDbXGA==
+  dependencies:
+    tslib "^2.0.0"
+
+ngx-chips@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-chips/-/ngx-chips-3.0.0.tgz#9a373adcd8997c820bc1bc9f0751a19ae1210551"
+  integrity sha512-hBJg4m9kCtCfersQef7vr2Ve6j9ntFSoB5ktF8MyOQnpONAriIp46c3Tb2wdf/lMEB2Xmc45snfJKnxKh3zimg==
+  dependencies:
+    ng2-material-dropdown ">=1.0.0"
+    tslib "^2.3.0"
+
 ngx-cookie-service@^19.0.0:
   version "19.0.0"
   resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-19.0.0.tgz#fbea6896819610e83dcb136a064a4c76e368dadc"
@@ -8118,7 +8140,7 @@ treeverse@^3.0.0:
   resolved "https://registry.npmjs.org/treeverse/-/treeverse-3.0.0.tgz"
   integrity sha512-gcANaAnd2QDZFmHFEOF4k7uc1J/6a6z3DJMd/QwEyxLoKGiptJRwid582r7QIsFlFMIZ3SnxfS52S4hm2DHkuQ==
 
-tslib@2.8.1, tslib@^2.0.0, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.8.0, tslib@^2.8.1:
+tslib@2.8.1, tslib@^2.0.0, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.3.1, tslib@^2.8.0, tslib@^2.8.1:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==

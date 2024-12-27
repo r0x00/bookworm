@@ -9,6 +9,7 @@ const EnviromentServices = require('../api/services/EnviromentServices');
 const policy = require('../api/policy');
 const ShowcaseService = require('../api/services/ShowcaseService');
 const MeService = require('../api/services/MeService');
+const SearchServices = require('../api/services/SearchServices');
 
 const router = express.Router();
 
@@ -197,6 +198,14 @@ routes.me = {
         method: "loadBookCreated"
     },
 };
+
+routes.search = {
+    "get /search": {
+        services: SearchServices,
+        method: "search",
+    },
+};
+
 
 _.each(routes, (v, k) => {
     _.each(v, (values, name) => { 

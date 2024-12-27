@@ -7,10 +7,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { NgIf } from '@angular/common';
 import { Book } from '../models/book.models';
+import { TagInputModule } from 'ngx-chips';
 
 @Component({
   selector: 'app-update-book',
-  imports: [ NgIf, FontAwesomeModule, ReactiveFormsModule, RouterLink, RouterLinkActive ],
+  imports: [ NgIf, FontAwesomeModule, ReactiveFormsModule, RouterLink, RouterLinkActive, TagInputModule ],
   templateUrl: './update-book.component.html',
   styleUrl: './update-book.component.scss'
 })
@@ -23,7 +24,7 @@ export class UpdateBookComponent {
     name: new FormControl('', [ Validators.required, Validators.minLength(3), Validators.maxLength(120) ]),
     description: new FormControl('', [ Validators.minLength(5), Validators.maxLength(300) ]),
     author: new FormControl('', [ Validators.required, Validators.minLength(3), Validators.maxLength(120) ]),
-    types: new FormControl([], [ Validators.required ]),  
+    tags: new FormControl([], [ Validators.required ]),  
     wallpaper: new FormControl(''),
     finished: new FormControl(false, [])
   });
@@ -35,12 +36,14 @@ export class UpdateBookComponent {
     private readonly route: ActivatedRoute
   ) {};
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.bookId = this.route.snapshot.paramMap.get('id');
 
+  };
+
+  ngAfterViewInit(): void {
     this.showBook();
   };
-  
 
   update(): void {
     if(this.bookUpdate.invalid) return;
@@ -52,13 +55,12 @@ export class UpdateBookComponent {
       name: formData.name,
       description: formData.description,
       author: formData.author,
-      types: [ formData.types ],
+      tags: formData.tags,
       wallpaper: formData.wallpaper,
       finished: formData.finished
     }).subscribe({
       next: (res: any) => {
         this.router.navigate([`/book/${this.bookId}/view`]);
-
 
         this.toastr.success(`Book ${res.name} was created with success!`, "Success!");
       },
@@ -74,14 +76,10 @@ export class UpdateBookComponent {
       next: (res: any) => {
         const book: Book = res;
 
-        console.log(book)
-
         this.bookUpdate.get('name')?.setValue(book.name);
         this.bookUpdate.get('description')?.setValue(book.description);
         this.bookUpdate.get('author')?.setValue(book.author);
-        this.bookUpdate.get('types')?.setValue(book.types);
-
-
+        this.bookUpdate.get('tags')?.setValue(book.tags as never[]);
       },
 
       error: (_error) => {

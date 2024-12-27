@@ -23,8 +23,6 @@ class BookServices {
             const result = await Book.findOne({ where: { id: id } });
 
             if(!result) return res.status(400).send("Book not found");
-
-            console.log(result)
             
             const userId = req.session?.passport?.user?.id;
 
@@ -51,14 +49,13 @@ class BookServices {
             res.send(result);
 
         } catch(_error) {
-            console.log(_error)
             res.status(500).send(_error.message);
         };
     };
 
     static async create (req, res, next) {
         try {
-            const { name, description, author, types, wallpaper } = req.body;
+            const { name, description, author, tags, wallpaper } = req.body;
 
             if(!name) return res.status(400).send("Please add book name");
 
@@ -70,7 +67,7 @@ class BookServices {
                 name,
                 description,
                 author,
-                types,
+                tags,
                 wallpaper,
                 createdBy: userId
             });
@@ -84,7 +81,7 @@ class BookServices {
 
     static async update (req, res, next) {
         try {
-            const { id, name, description, author, types, wallpaper, finished } = req.body;
+            const { id, name, description, author, tags, wallpaper, finished } = req.body;
 
             if(!id) return res.status(400).send("Please add book ID");
 
@@ -94,7 +91,7 @@ class BookServices {
                 name,
                 description,
                 author,
-                types,
+                tags,
                 wallpaper,
                 finished
             }, { where: { id: id } });

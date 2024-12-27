@@ -1,11 +1,16 @@
 import { Chapter } from "./chapter.models";
 
+export interface Tag {
+    value: string,
+    display: string
+};
+
 export interface Book {
     id: string,
     name: string, 
     description: string,
     author: string,
-    types: [],
+    tags: Tag[],
     views: number,
     finished: boolean,
     wallpaper: Blob,

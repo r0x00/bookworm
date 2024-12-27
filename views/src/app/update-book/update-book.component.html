@@ -51,14 +51,14 @@
             </div>
     
             <div class="input-container">
-                <label for="types" class="input-container--label">Types</label>
-                <input id="types" type="text" formControlName="types" focus>
+                <label for="tags" class="input-container--label">Tags</label>
+                <tag-input formControlName="tags"></tag-input>
     
-                <div class="input-warning" *ngIf="bookUpdate.get('types')?.dirty && bookUpdate.get('types')?.invalid">
+                <div class="input-warning" *ngIf="bookUpdate.get('tags')?.dirty && bookUpdate.get('tags')?.invalid">
                     <fa-icon [icon]="faCircleExclamation"></fa-icon>
     
                     <div class="input-waning-texts">
-                        <p *ngIf="bookUpdate.get('types')?.hasError('required')" class="no-margins">A type is required</p>
+                        <p *ngIf="bookUpdate.get('tags')?.hasError('required')" class="no-margins">A tag is required</p>
                     </div>
                 </div>
             </div>
