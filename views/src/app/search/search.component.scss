@@ -1,0 +1,54 @@
+
+.books-container {
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.book-container {
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    flex-direction: column;
+
+    &:hover {
+        background-color: #F0F0F0;
+    }
+}
+
+
+.book-content-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.book-top-container {
+    width: 100%;
+}
+
+.book-information {
+    flex-wrap: wrap;
+}
+
+@media (min-width: 700px) {
+    .book-container {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    
+    .book-image-container {
+        height: 155px;
+        width: 302px;
+    }
+
+
+    .book-top-container {
+        width: unset;
+    }
+}

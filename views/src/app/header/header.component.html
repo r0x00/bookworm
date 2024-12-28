@@ -8,7 +8,28 @@
             <fa-icon [icon]="faPlus"></fa-icon> Create
         </button>
 
-        <input class="search" type="text" placeholder="search">
+        <div class="search-container">
+            <div class="search-bar">
+                <input class="search" type="text" placeholder="search" [(ngModel)]="searchQuery" (keydown)="searchKeydown()" (keyup)="searchKeyup()" (click)="openSearchResult = searchQuery != ''">
+                
+                <button class="btn btn-blue"  [disabled]="searchQuery == ''" (click)="searchRedirect()">
+                    <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+                </button>
+            </div>
+            
+            
+            <div class="search-results" *ngIf="openSearchResult">
+                <div *ngIf="!searchingDone" class="loader"></div>
+                <div class="notfound-container" *ngIf="searchingDone && searchItems.length == 0">
+                    <p class="no-margins">no books found</p>
+                </div>
+
+                <div *ngFor="let item of searchItems" class="search-result" routerLink="/book/{{item.id}}/view" routerLinkActive="active">
+                    <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
+                    <p class="no-margins">{{item.name}}</p>
+                </div>
+            </div>
+        </div>
 
         <div class="me-container" *ngIf="userProfile">
             <div class="me-profile" (click)="toggleProfileMenu()">
@@ -22,8 +43,6 @@
                     </div>
 
                     <p class="no-margins">{{userProfile.username}}</p>
-
-                    
                 </div>
 
                 <div class="me-menu--divider"></div>
@@ -43,4 +62,5 @@
     </div>
 
     <div *ngIf="openMenuProfile" class="me-menu--background" (click)="toggleProfileMenu()"></div>
+    <div *ngIf="openSearchResult" class="search--background" (click)="openSearchResult = false"></div>
 </div>

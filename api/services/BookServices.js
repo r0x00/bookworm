@@ -1,11 +1,19 @@
 const Book = require('../methods/Book');
 const Chapter = require('../methods/Chapter');
 const User = require('../methods/User');
+const { Op } = require('sequelize');
 
 class BookServices {
     static async load (req, res, next) {
         try {
-            const result = await Book.findAll();
+            const query = req.query.query;
+
+
+            const where = query ? { where: {name: { [ Op.like ]: `%${query}%` } } }: {};
+
+            console.log(where)
+
+            const result = await Book.findAll(where);
 
             res.send(result);
 

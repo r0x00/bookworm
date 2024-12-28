@@ -9,6 +9,7 @@ import { ChapterComponent } from './chapter/chapter.component';
 import { NewChapterComponent } from './new-chapter/new-chapter.component';
 import { MeComponent } from './me/me.component';
 import { UpdateBookComponent } from './update-book/update-book.component';
+import { SearchComponent } from './search/search.component';
 
 export const routes: Routes = [
     { 
@@ -39,6 +40,10 @@ export const routes: Routes = [
         path: 'me',
         // title: resolvedChildATitle,
         component: MeComponent,
+    },
+    {
+        path: 'search',
+        component: SearchComponent,
     },
     { 
         path: 'login', 
