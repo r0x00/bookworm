@@ -100,17 +100,18 @@
                 <p class="no-margins">no books found</p>
             </div>
 
-            <div class="book-container" *ngFor="let item of books; let i = index">
+            <div class="book-container" *ngFor="let item of books; let i = index" routerLink="/book/{{item?.id}}/view">
                 <div class="book-top-container">
                     <div class="book-status" *ngIf="item.finished">
                         <p>Finished</p>
                     </div>
 
-
                     <div class="book-image-container">
                         <fa-icon *ngIf="!item.wallpaper || typeof item.wallpaper != 'string'" [icon]="faImage" class="fa-4x"></fa-icon>
                         <img *ngIf="item.wallpaper && typeof item.wallpaper == 'string'" class="book-image" src="/images/wallpaper/welcome.png" alt="book wallpaper"/>
                     </div>
+
+                    <app-menu *ngIf="item.isCreatedByUser" [item]="item" [difference20]="true" [callback]="menuCallback.bind(this)"></app-menu>
                 </div>
 
                 <div class="book-content-container">

@@ -4,13 +4,13 @@
     </div>
 
     <div *ngIf="isNotLogin" class="right">
-        <button class="btn btn-small btn-yellow btn-book" *ngIf="userProfile" routerLink="/book/new" routerLinkActive="active">
+        <button class="btn btn-medium btn-yellow btn-book" *ngIf="userProfile" routerLink="/book/new" routerLinkActive="active">
             <fa-icon [icon]="faPlus"></fa-icon> Create
         </button>
 
         <div class="search-container">
             <div class="search-bar">
-                <input class="search" type="text" placeholder="search" [(ngModel)]="searchQuery" (keydown)="searchKeydown()" (keyup)="searchKeyup()" (click)="openSearchResult = searchQuery != ''">
+                <input class="search" type="text" placeholder="search" [(ngModel)]="searchQuery" (keydown)="searchKeydown()" (keyup)="searchKeyup()" (keydown.enter)="searchRedirect()" (click)="openSearchResult = searchQuery != ''">
                 
                 <button class="btn btn-blue"  [disabled]="searchQuery == ''" (click)="searchRedirect()">
                     <fa-icon [icon]="faMagnifyingGlass"></fa-icon>

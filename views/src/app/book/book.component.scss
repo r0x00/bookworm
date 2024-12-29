@@ -134,6 +134,7 @@
     align-items: center;
     cursor: pointer;
     transition: background-color .25s ease-in-out;
+    position: relative;
 
     &:hover,
     &:focus {

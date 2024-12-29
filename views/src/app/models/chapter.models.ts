@@ -8,5 +8,7 @@ export interface Chapter {
     chapterNumber: number,
     read: boolean,
     summary: string,
+    openMenu: boolean,
+    isCreatedByUser: boolean
 };
   

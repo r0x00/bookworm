@@ -12,12 +12,11 @@ import { Chapter } from '../models/chapter.models';
 import { Pagination } from '../models/pagination.models';
 import { UserProfileService } from '../services/user-profile.service';
 import { User } from '../models/user.models';
-
-
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-book',
-  imports: [ FontAwesomeModule, NgFor, NgIf, RouterLink, NgClass ],
+  imports: [ FontAwesomeModule, NgFor, NgIf, RouterLink, NgClass, MenuComponent ],
   templateUrl: './book.component.html',
   styleUrl: './book.component.scss'
 })
@@ -54,7 +53,6 @@ export class BookComponent {
 
     this.showBook();
   };
-  
 
   showBook(): void {  
     this.http.get("/api/book/" + this.bookId).subscribe({
@@ -84,6 +82,8 @@ export class BookComponent {
         this.chapters = res.chapters.map((item: Chapter) => {
           item.createdAt = moment(item.createdAt).format("DD/MM/YYYY");
           item.updatedAt = moment(item.updatedAt).format("DD/MM/YYYY"); 
+
+          item.isCreatedByUser = !!this.userProfile && this.userProfile?.id == this.book?.createdBy;
 
           return item;
         });
@@ -162,7 +162,12 @@ export class BookComponent {
   loadProfile(): void {
     this.UserProfileService.userProfile$.subscribe(profile => {
       this.userProfile = profile;
+
+      // this.loadChapters();
     });
   };
 
+  menuCallback(): void {
+    this.loadChapters();
+  };
 };

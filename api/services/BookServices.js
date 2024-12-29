@@ -92,8 +92,15 @@ class BookServices {
             const { id, name, description, author, tags, wallpaper, finished } = req.body;
 
             if(!id) return res.status(400).send("Please add book ID");
-
             if(!name) return res.status(400).send("Please add book name");
+
+            const checkBook = await Book.findOne({ where: { id: id } });
+
+            if(!checkBook) return res.status(400).send("Book not found");
+
+            const userId = req.session?.passport?.user?.id;
+
+            if(checkBook.createdBy != userId) return res.status(400).send("You can't update this chapter");
 
             const result = await Book.update( {
                 name,
@@ -117,9 +124,13 @@ class BookServices {
 
             if(!id) return res.status(400).send("Please add book ID");
 
-            const book = await Book.findOne({ where: { id: id } });
+            const checkBook = await Book.findOne({ where: { id: id } });
 
-            if(!book) return res.status(400).send("Book not found");
+            if(!checkBook) return res.status(400).send("Book not found");
+
+            const userId = req.session?.passport?.user?.id;
+
+            if(checkBook.createdBy != userId) return res.status(400).send("You can't update this chapter");
 
             await Chapter.destroy({ where: { book: id }});
             await Book.destroy({ where: { id: id } });

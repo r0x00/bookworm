@@ -1,0 +1,44 @@
+<div class="main-container">
+    <h2 class="page-title">Update Chapter</h2>
+
+    <form class="form-container" [formGroup]="chapterUpdate" (ngSubmit)="update()">
+        <div class="input-container">
+            <label for="title" class="input-container--label">Title</label>
+
+            <input id="title" type="text" formControlName="title" placeholder="Title" focus>
+
+            <div class="input-warning" *ngIf="chapterUpdate.get('title')?.dirty && chapterUpdate.get('title')?.invalid">
+                <fa-icon [icon]="faCircleExclamation"></fa-icon>
+    
+                <div class="input-waning-texts">
+                    <p *ngIf="chapterUpdate.get('title')?.hasError('required')" class="no-margins">A title is required</p>
+                    <p *ngIf="chapterUpdate.get('title')?.hasError('minlength')" class="no-margins">The title must be at least 3 characters long</p>
+                    <p *ngIf="chapterUpdate.get('title')?.hasError('maxlength')" class="no-margins">The title must not be longer than 120 characters</p> 
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container-quill">
+            <label for="quill-editor" class="input-container--label">Content</label>
+
+            <div class="quill-editor" id="quill-editor"></div>
+
+            <p class="no-margins quill-editor--counter">
+                <span [ngClass]="{'text-error': chapterUpdate.get('content')?.hasError('minlength')}">{{chapterUpdate.get('content')?.value?.length}}</span>
+                <span>/</span>
+                <span [ngClass]="{'text-error': chapterUpdate.get('content')?.hasError('maxlength')}">30000</span>
+            </p>
+        </div>
+
+        <div class="form-container--btns">
+            <button class="btn btn-gray" routerLink="/book/{{bookId}}/view" routerLinkActive="active">
+                Cancel
+            </button>
+
+            <button class="btn btn-blue" type="submit"  [disabled]="!chapterUpdate.valid">
+                Update
+            </button>
+        </div>
+        
+    </form>
+</div>

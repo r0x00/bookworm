@@ -3,6 +3,8 @@
 
     <h2 class="page-title">{{chapter?.title}} {{(chapter?.chapterNumber || 0) + 1}}</h2>
 
+    <app-menu *ngIf="chapter && chapter?.isCreatedByUser" [item]="chapter" type="chapter" [paddingTop0]="true" [differenceTop0]="true" [noBackground]="true" [callback]="menuCallback.bind(this)"></app-menu>
+    
     <div id="quill-editor" class="quill-editor chapter-content" (mouseup)="mouseup($event)"></div>
 
     <div class="btns-container">

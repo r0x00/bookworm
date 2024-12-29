@@ -87,6 +87,8 @@
                         <div *ngIf="item?.read"></div>
                         <p *ngIf="item?.read" class="no-margins">Read</p>
                     </div>
+
+                    <app-menu *ngIf="item.isCreatedByUser" [item]="item" type="chapter" [difference20]="true" [noBackground]="true" [callback]="menuCallback.bind(this)"></app-menu>
                 </div>
             </div>
         </div>

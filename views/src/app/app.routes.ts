@@ -10,6 +10,7 @@ import { NewChapterComponent } from './new-chapter/new-chapter.component';
 import { MeComponent } from './me/me.component';
 import { UpdateBookComponent } from './update-book/update-book.component';
 import { SearchComponent } from './search/search.component';
+import { UpdateChapterComponent } from './update-chapter/update-chapter.component';
 
 export const routes: Routes = [
     { 
@@ -35,6 +36,10 @@ export const routes: Routes = [
     {
         path: 'book/:bookId/new/chapter',
         component: NewChapterComponent
+    },
+    {
+        path: 'chapter/:id/update',
+        component: UpdateChapterComponent
     },
     {
         path: 'me',

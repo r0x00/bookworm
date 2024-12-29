@@ -2,14 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { User } from '../models/user.models';
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faCircleExclamation, faEllipsisVertical, faPlus, faTrash, faPenNib } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Book } from '../models/book.models';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import moment from 'moment';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { UserProfileService } from '../services/user-profile.service';
+import { MenuComponent } from '../menu/menu.component';
 
 enum BookTypes {
   myBooks = 'myBooks',
@@ -18,7 +20,7 @@ enum BookTypes {
 
 @Component({
   selector: 'app-me',
-  imports: [ FontAwesomeModule, NgIf, ReactiveFormsModule, NgClass, NgFor ],
+  imports: [ FontAwesomeModule, NgIf, ReactiveFormsModule, NgClass, NgFor, MenuComponent, RouterLink ],
   templateUrl: './me.component.html',
   styleUrl: './me.component.scss',
 })
@@ -26,6 +28,7 @@ export class MeComponent {
   me: User | undefined;
   selectedBookTab:BookTypes = BookTypes.myBooks;
   books: Book[] = [];
+  userProfile: User | null = null;
 
   faCircleExclamation = faCircleExclamation;
   faImage = faImage;
@@ -41,8 +44,13 @@ export class MeComponent {
   constructor(
     private readonly http: HttpClient, 
     private readonly toastr: ToastrService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly UserProfileService: UserProfileService
   ) {}
+
+  ngOnInit(): void {
+    this.loadProfile();
+  }
 
   ngAfterViewInit(): void {
     this.showMe();
@@ -69,6 +77,8 @@ export class MeComponent {
   };
 
   loadBooks(type: string): void {
+    this.books = [];
+    
     this.selectedBookTab = BookTypes[type as BookTypes];
 
     let url = '/api/me/books';
@@ -82,6 +92,8 @@ export class MeComponent {
           item.createdAt = moment(item.createdAt).format("DD/MM/YYYY"); 
           item.updatedAt = moment(item.updatedAt).format("DD/MM/YYYY");
 
+          item.isCreatedByUser = !!this.userProfile && this.userProfile?.id == item?.createdBy;
+
           return item;
         });
       },
@@ -89,5 +101,17 @@ export class MeComponent {
         this.toastr.error("It was not possible to load books","Ops! Something happened!");
       }
     });
+  };
+
+  loadProfile(): void {
+    this.UserProfileService.userProfile$.subscribe(profile => {
+      this.userProfile = profile;
+
+      this.loadBooks(this.selectedBookTab);
+    });
+  };
+
+  menuCallback(): void {
+    this.loadBooks(this.selectedBookTab);
   };
 }

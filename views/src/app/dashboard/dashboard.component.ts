@@ -11,11 +11,12 @@ import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { faEllipsisVertical, faPenNib, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { UserProfileService } from '../services/user-profile.service';
 import { User } from '../models/user.models';
+import { MenuComponent } from '../menu/menu.component';
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [ NgFor, NgClass, NgIf, RouterLink, NgStyle, FontAwesomeModule ],
+  imports: [ NgFor, NgClass, NgIf, RouterLink, NgStyle, FontAwesomeModule, MenuComponent ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -25,7 +26,6 @@ export class DashboardComponent {
   showcaseItems: Showcase[] = [];
   showcaseInterval: any;
   lastReadItems: Book[] = [];
-  currentBookMenu: Book | null = null;
   userProfile: User | null = null;  
 
   faImage = faImage;
@@ -118,29 +118,6 @@ export class DashboardComponent {
     }, 1000 * 10); //10 seconds
   };
 
-  toggleMenu(event: Event, item: Book): void {
-    event.stopImmediatePropagation();
-
-    item.openMenu = !item.openMenu;
-    this.currentBookMenu = item;
-
-    if(!item.openMenu) this.currentBookMenu = null;
-  };
-
-  deleteBook(id: string): void {
-    this.http.delete("/api/book", { body: { id: id } }).subscribe({
-      next: () => {
-        this.toastr.success("Book was deleted with success!","Success!");
-        this.loadBooks();
-        this.loadLastRead();
-      },
-
-      error: (_error) => {
-        this.toastr.error("It was not possible to delete book","Ops! Something happened!");
-      }
-    });
-  };
-
   loadProfile(): void {
     this.UserProfileService.userProfile$.subscribe(profile => {
       this.userProfile = profile;
@@ -148,5 +125,10 @@ export class DashboardComponent {
       this.loadBooks();
       this.loadLastRead();
     });
+  };
+
+  menuCallback(): void {
+    this.loadBooks();
+    this.loadLastRead();
   };
 }

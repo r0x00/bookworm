@@ -29,6 +29,20 @@ export class SearchComponent {
     private readonly route: ActivatedRoute
   ) {}
 
+  ngOnInit(): void {
+    this.loadProfile();
+
+    this.route.queryParams.subscribe(params => {
+      const searchQuery = params['query'];
+
+      if(this.searchQuery && this.searchQuery != searchQuery) {
+        this.searchQuery = searchQuery;
+
+        this.loadBooks();
+      };
+    });
+  };
+
   ngAfterViewInit () {
     this.searchQuery = this.route.snapshot.queryParams['query'] || '';
     

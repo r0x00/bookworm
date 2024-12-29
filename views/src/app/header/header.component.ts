@@ -1,6 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMagnifyingGlass, faPlus, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { User } from '../models/user.models';
@@ -36,7 +36,7 @@ export class HeaderComponent {
     private readonly http: HttpClient,
     private readonly toastr: ToastrService
   ) {}
-  
+
   ngOnInit(): void {
     this.loadProfile();
   };

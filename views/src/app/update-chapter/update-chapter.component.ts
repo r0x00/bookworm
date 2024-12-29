@@ -1,28 +1,27 @@
+import { NgClass, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ToastrService } from 'ngx-toastr';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { NgClass, NgIf } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 import Quill from 'quill';
 
-
 @Component({
-  selector: 'app-new-chapter',
+  selector: 'app-update-chapter',
   imports: [ ReactiveFormsModule, FontAwesomeModule, NgIf, RouterLink, NgClass ],
-  templateUrl: './new-chapter.component.html',
-  styleUrl: './new-chapter.component.scss'
+  templateUrl: './update-chapter.component.html',
+  styleUrl: './update-chapter.component.scss'
 })
-export class NewChapterComponent {
+export class UpdateChapterComponent {
   faCircleExclamation = faCircleExclamation;
   bookId: string | null = '';
+  id: string | null = '';
   quill: Quill |  null = null;
   quillTextLength: number = 0;
 
-
-  chapterCreate = new FormGroup({
+  chapterUpdate = new FormGroup({
     title: new FormControl('', [ Validators.required, Validators.minLength(3), Validators.maxLength(120) ]),
     content: new FormControl('', [ Validators.minLength(10), Validators.maxLength(30000) ]),
   });
@@ -32,25 +31,25 @@ export class NewChapterComponent {
     private readonly toastr: ToastrService, 
     private readonly router: Router, 
     private readonly route: ActivatedRoute
-  ) {}
-
+  ) {};
 
   ngOnInit(): void {
     this.bookId = this.route.snapshot.paramMap.get('bookId');
+    this.id = this.route.snapshot.paramMap.get('id');
   };
-  
+
   ngAfterViewInit(): void {
-    this.checkBook();
-    this.startQuill();
+    this.showChapter();
   };
   
 
-  create(): void {
-    if(!this.chapterCreate.valid) return;
+  update(): void {
+    if(!this.chapterUpdate.valid) return;
 
-    const data = this.chapterCreate.value;
+    const data = this.chapterUpdate.value;
 
-    this.http.post('/api/chapter', {
+    this.http.patch('/api/chapter', {
+      id: this.id,
       title: data.title,
       content: JSON.stringify(this.quill?.getContents()),
       book: this.bookId,
@@ -64,16 +63,26 @@ export class NewChapterComponent {
         this.toastr.error("An error occurred when creating chapter.", "Ops! Something happened!");
       }
     })
+
   };
 
-  checkBook(): void {
-    this.http.get(`/api/book/${this.bookId}`).subscribe({
+  showChapter(): void {
+    this.http.get("/api/chapter/" + this.id).subscribe({
+      next: (res: any) => {
+        this.bookId = res.chapter.book;
+
+        this.chapterUpdate.get('title')?.setValue(res.chapter.title);
+        this.chapterUpdate.get('content')?.setValue(res.chapter.content);
+
+        this.startQuill()
+      },
       error: (_error) => {
-        this.toastr.error("Book was not found, please use a valid book.","Ops! Something happened!");
-        this.router.navigate(['/']);
+        this.router.navigate(["/"]);
+        this.toastr.error("It was not possible to load chapter","Ops! Something happened!");
       }
-    })
+    });
   };
+
 
   startQuill(): void {
     const toolbarOptions = [
@@ -93,11 +102,21 @@ export class NewChapterComponent {
       theme: "snow",
     });
 
+    try {
+      const text = JSON.parse(this.chapterUpdate.get('content')?.value ?? '');
+      this.quill.setContents(text);
+
+    } catch (_error) {
+      const text = this.chapterUpdate.get('content')?.value ?? '';
+      this.quill.setText(text);
+    };
+
+
     this.quill.on('editor-change', (eventName:string) => {
       if (eventName === 'text-change') {
         const text = this.quill?.getText() ?? '';
 
-        this.chapterCreate.get('content')?.setValue(text);
+        this.chapterUpdate.get('content')?.setValue(text);
       }
     });
 
@@ -106,4 +125,5 @@ export class NewChapterComponent {
 
     if(qlEditorDiv) qlEditorDiv?.setAttribute("style", "border-radius: 16px 16px 0 0 !important;")
   };
-};
+
+}

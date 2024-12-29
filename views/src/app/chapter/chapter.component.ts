@@ -6,10 +6,13 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/r
 import { Book } from '../models/book.models';
 import Quill, { Delta } from 'quill';
 import { NgIf, NgStyle } from '@angular/common';
+import { MenuComponent } from '../menu/menu.component';
+import { User } from '../models/user.models';
+import { UserProfileService } from '../services/user-profile.service';
 
 @Component({
   selector: 'app-chapter',
-  imports: [ RouterLink, RouterLinkActive, NgIf, NgStyle ],
+  imports: [ RouterLink, RouterLinkActive, NgIf, NgStyle, MenuComponent ],
   templateUrl: './chapter.component.html',
   styleUrl: './chapter.component.scss'
 })
@@ -24,6 +27,7 @@ export class ChapterComponent {
   translatedContet: string = '';
   startTranslation: boolean = false;
   translationTimeout: any;
+  userProfile: User | null = null;
   translationCardPosition: {x: number, y: number} = {
     y: 0,
     x: 0
@@ -34,9 +38,12 @@ export class ChapterComponent {
     private readonly toastr: ToastrService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
+    private readonly UserProfileService: UserProfileService
   ) {}
 
   ngOnInit(): void {
+    this.loadProfile();
+
     this.route.paramMap.subscribe(params => {
       const chapterId = params.get('id');
 
@@ -62,6 +69,10 @@ export class ChapterComponent {
         this.book = res.chapter.Book;
         this.nextChapterId = res.nearChapterInfo.next?.id;
         this.prevChapterId = res.nearChapterInfo.prev?.id;
+
+        if(this.chapter) this.chapter.isCreatedByUser = !!this.userProfile && this.userProfile?.id == this.book?.createdBy;
+
+        console.log(this.userProfile, this.book)
 
         this.startQuill()
       },
@@ -160,5 +171,24 @@ export class ChapterComponent {
     const qlEditorDiv = document.getElementById("quill-editor")?.querySelector(".ql-editor");
 
     if(qlEditorDiv) qlEditorDiv?.classList.remove("ql-editor");
+  };
+
+  menuCallback(): void {
+    this.router.navigate(["/book/" + this.bookId + '/view']);
+
+  };
+
+  loadProfile(): void {
+    this.UserProfileService.userProfile$.subscribe(profile => {
+      this.userProfile = profile;
+
+      if(this.chapter) {
+        this.chapter.isCreatedByUser = !!this.userProfile && this.userProfile?.id == this.book?.createdBy;
+
+      }
+
+      console.log(this.chapter)
+
+    });
   };
 }

@@ -1,0 +1,18 @@
+<div class="menu">
+    <div class="menu-btn" (click)="toggleMenu($event, item)" [ngClass]="{ 'padding-top-0': differenceTop0, 'difference-top-0': differenceTop0, 'difference-20': difference20, 'no-background': noBackground }">
+        <fa-icon [icon]="faEllipsisVertical"></fa-icon>
+    </div>
+
+    <div *ngIf="item.openMenu" class="menu--options" (click)="toggleMenu($event, item)">
+        <div *ngFor="let option of menuOptions">
+            <div class="menu--option" *ngIf="option.enabled" (click)="optionAction(option)">
+                <p>
+                    <fa-icon [icon]="option.icon"></fa-icon> 
+                    {{option.title}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="currentItemMenu" class="menu--background" (click)="toggleMenu($event, currentItemMenu)"></div>

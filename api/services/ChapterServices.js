@@ -63,7 +63,7 @@ class ChapterServices {
 
             if(!id) return res.status(400).send("Please add chapter ID");
 
-            const result = await Chapter.findOne({  where: { id: id }, include: [ { model: Book, as: 'Book', attributes: [ 'id', 'name' ]} ] });
+            const result = await Chapter.findOne({  where: { id: id }, include: [ { model: Book, as: 'Book', attributes: [ 'id', 'name', 'createdBy' ]} ] });
 
             if(!result) return res.status(400).send("Chapter not found");
 
@@ -152,17 +152,29 @@ class ChapterServices {
 
     static async update (req, res, next) {
         try {
-            const { id, title, content } = req.body;
+            const { id, title, content, summary } = req.body;
 
-            if(!id) return res.send(400).send("Please add chapter ID");
-
+            if(!id) return res.status(400).send("Please add chapter ID");
             if(!title) return res.status(400).send("Please add chapter title");
-
             if(!content) return res.status(400).send("Please add content");
+            if(!summary) return res.status(400).send("Please add summary");
+
+            const checkChapter = await Chapter.findOne({ where: { id: id } });
+
+            if(!checkChapter) return res.status(400).send("Chapter not found");
+
+            const checkBook = await Book.findOne({ where: { id: checkChapter.book } });
+
+            if(!checkBook) return res.status(400).send("Book not found");
+
+            const userId = req.session?.passport?.user?.id;
+
+            if(checkBook.createdBy != userId) return res.status(400).send("You can't update this chapter");
 
             const result = await Chapter.update({
                 title,
-                content
+                content,
+                summary
             }, { where: { id: id }});
 
             res.send(result);
@@ -177,6 +189,18 @@ class ChapterServices {
             const { id } = req.body;
 
             if(!id) return res.status(400).send("Please add chapter ID");
+
+            const checkChapter = await Chapter.findOne({ where: { id: id } });
+
+            if(!checkChapter) return res.status(400).send("Chapter not found");
+
+            const checkBook = await Book.findOne({ where: { id: checkChapter.book } });
+
+            if(!checkBook) return res.status(400).send("Book not found");
+
+            const userId = req.session?.passport?.user?.id;
+
+            if(checkBook.createdBy != userId) return res.status(400).send("You can't update this chapter");
 
             await Chapter.destroy({ where: { id: id } });
 
