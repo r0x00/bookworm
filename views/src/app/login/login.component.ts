@@ -55,7 +55,9 @@ export class LoginComponent {
       },
 
       error: (_error) => {
-        this.toastr.error("Its was not possible log-in", "Ops! Something happened!");
+        this.toastr.error("Its was not possible log-in", "Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     });    
   };

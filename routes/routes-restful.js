@@ -182,6 +182,12 @@ routes.me = {
         method: "show",
         policy: [ "auth" ]
     },
+    
+    "patch /me": {
+        services: MeService,
+        method: "update",
+        policy: [ "auth" ]
+    },
 
     "get /me/books/read": {
         services: MeService,

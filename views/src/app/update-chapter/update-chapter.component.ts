@@ -57,10 +57,14 @@ export class UpdateChapterComponent {
     }).subscribe({
       next: (res: any) => {
         this.router.navigate([`/book/${this.bookId}/view`]);
-        this.toastr.success(`Chapter ${res.title} was created with success!`, "Success!");
+        this.toastr.success(`Chapter ${res.title} was created with success!`, "Success!", {
+          "closeButton": true,
+        });
       },
       error: (_error) => {
-        this.toastr.error("An error occurred when creating chapter.", "Ops! Something happened!");
+        this.toastr.error("An error occurred when creating chapter.", "Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     })
 
@@ -78,7 +82,9 @@ export class UpdateChapterComponent {
       },
       error: (_error) => {
         this.router.navigate(["/"]);
-        this.toastr.error("It was not possible to load chapter","Ops! Something happened!");
+        this.toastr.error("It was not possible to load chapter","Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     });
   };

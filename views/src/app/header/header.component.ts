@@ -71,7 +71,9 @@ export class HeaderComponent {
         this.router.navigate(['/']);
 
       }, error: (_error) => {
-        this.toastr.error("It was not possible to log-out", "Ops! Something happened!");
+        this.toastr.error("It was not possible to log-out", "Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     });
   };
@@ -112,7 +114,9 @@ export class HeaderComponent {
         
       }, 
       error: (_error) => {
-        this.toastr.error("It was not possible to search", "Ops! Something happened!");
+        this.toastr.error("It was not possible to search", "Ops! Something happened!", {
+          "closeButton": true,
+        });
         this.searchingDone = true;
       }
       

@@ -27,6 +27,13 @@ const Passport = sequelize.define('Passport', {
 
             return value;
         },
+        beforeUpdate: function (value) {
+            const hash = bcrypt.hashSync(value.password, 10);
+
+            value.password = hash;
+
+            return value;
+        },
     },
 });
 

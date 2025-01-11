@@ -9,6 +9,7 @@ import { NgIf, NgStyle } from '@angular/common';
 import { MenuComponent } from '../menu/menu.component';
 import { User } from '../models/user.models';
 import { UserProfileService } from '../services/user-profile.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-chapter',
@@ -38,7 +39,8 @@ export class ChapterComponent {
     private readonly toastr: ToastrService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly UserProfileService: UserProfileService
+    private readonly UserProfileService: UserProfileService,
+    private readonly CookieService: CookieService
   ) {}
 
   ngOnInit(): void {
@@ -72,13 +74,15 @@ export class ChapterComponent {
 
         if(this.chapter) this.chapter.isCreatedByUser = !!this.userProfile && this.userProfile?.id == this.book?.createdBy;
 
-        console.log(this.userProfile, this.book)
+        this.startQuill();
 
-        this.startQuill()
+        if(this.chapterId) this.CookieService.set(`book-${this.bookId}-last-chapter`, this.chapterId);
       },
       error: (_error) => {
         this.router.navigate(["/book/" + this.bookId + '/view']);
-        this.toastr.error("It was not possible to load chapter","Ops! Something happened!");
+        this.toastr.error("It was not possible to load chapter","Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     });
   };
@@ -106,7 +110,9 @@ export class ChapterComponent {
       },
 
       error: (_error) => {
-        this.toastr.error("It was not possible to translate","Ops! Something happened!");
+        this.toastr.error("It was not possible to translate","Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     });
   };

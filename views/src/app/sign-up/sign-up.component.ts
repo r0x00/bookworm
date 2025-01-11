@@ -49,14 +49,18 @@ export class SignUpComponent {
       password: formData.password
     }).subscribe({
       next: (res) => {
-        this.toastr.success('User was created.', 'Success!');
+        this.toastr.success('User was created.', 'Success!', {
+          "closeButton": true,
+        });
 
         this.userCreated = true;
 
         setTimeout(() => this.router.navigate(['/login']), 3000);
       },
       error: (_error) => {
-        this.toastr.error('An error occurred when creating user.', 'Ops! Something happened!');
+        this.toastr.error('An error occurred when creating user.', 'Ops! Something happened!', {
+          "closeButton": true,
+        });
       }
     });
   };

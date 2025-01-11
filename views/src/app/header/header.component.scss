@@ -38,7 +38,6 @@
     max-width: 365px;
     width: 100%;
     position: relative;
-    display: none;
 
     &:focus,
     &:hover {
@@ -76,7 +75,7 @@
 }
 
 .search-bar {
-    display: flex;
+    display: none;
 
     & .btn {
         border-radius: 0 var(--border-radius) var(--border-radius) 0;
@@ -116,12 +115,15 @@
 }
 
 @media(min-width: 900px) {
-    .btn-book,
-    .search {
+    .btn-book {
         display: block;
     }
 
     .me-profile {
+        display: flex;
+    }
+
+    .search-bar {
         display: flex;
     }
 }

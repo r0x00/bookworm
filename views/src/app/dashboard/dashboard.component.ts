@@ -63,7 +63,9 @@ export class DashboardComponent {
       },
 
       error: (_error) => {
-        this.toastr.error("It was not possible to load books","Ops! Something happened!");
+        this.toastr.error("It was not possible to load books","Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     })
   };
@@ -100,7 +102,9 @@ export class DashboardComponent {
       },
 
       error: (_error) => {
-        this.toastr.error("It was not possible to load showcase","Ops! Something happened!");
+        this.toastr.error("It was not possible to load showcase","Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     })
   };

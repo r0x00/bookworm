@@ -13,6 +13,7 @@ import { Pagination } from '../models/pagination.models';
 import { UserProfileService } from '../services/user-profile.service';
 import { User } from '../models/user.models';
 import { MenuComponent } from '../menu/menu.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-book',
@@ -27,6 +28,7 @@ export class BookComponent {
   chaptersPagination: Pagination | null = null;
   userProfile: User | null = null;  
   isCreatedByUser: boolean = false;
+  lastChapterId: string | null = null;
 
   faPlus = faPlus;
   faPenNib = faPenNib;
@@ -42,6 +44,7 @@ export class BookComponent {
     private readonly route: ActivatedRoute, 
     private readonly toastr: ToastrService,
     private readonly UserProfileService: UserProfileService,
+    private readonly CookieService: CookieService
   ) {}
 
   ngOnInit(): void {
@@ -67,9 +70,13 @@ export class BookComponent {
         this.loadChapters();
 
         this.isCreatedByUser = !!this.userProfile && this.userProfile?.id == this.book?.createdBy;
+
+        this.lastChapterId = this.CookieService.get(`book-${this.bookId}-last-chapter`);
       },
       error: (_error) => {
-        this.toastr.error("It was not possible to load book","Ops! Something happened!");
+        this.toastr.error("It was not possible to load book","Ops! Something happened!", {
+          "closeButton": true,
+        });
 
         this.router.navigate(["/"]);
       }
@@ -96,7 +103,9 @@ export class BookComponent {
       },
 
       error: (_error) => {
-        this.toastr.error("It was not possible to load chapters","Ops! Something happened!");
+        this.toastr.error("It was not possible to load chapters","Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     })
   };
@@ -120,12 +129,16 @@ export class BookComponent {
   deleteBook(): void {
     this.http.delete("/api/book", { body: { id: this.bookId } }).subscribe({
       next: () => {
-        this.toastr.success("Book was deleted with success!","Success!");
+        this.toastr.success("Book was deleted with success!","Success!", {
+          "closeButton": true,
+        });
         this.router.navigate(["/"]);
       },
 
       error: (_error) => {
-        this.toastr.error("It was not possible to delete book","Ops! Something happened!");
+        this.toastr.error("It was not possible to delete book","Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     });
   };
@@ -149,14 +162,17 @@ export class BookComponent {
           this.book.likes = likes_temp;
         };
 
-        this.toastr.error("It was not possible to like book","Ops! Something happened!");
+        this.toastr.error("It was not possible to like book","Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     });
   };
 
   playLastChapter(): void {
-    if(!this.userProfile) return;
+    if(!this.lastChapterId || this.lastChapterId == '') return;
 
+    this.router.navigate([`/book/${this.bookId}/chapter/${this.lastChapterId}`]);
   };
 
   loadProfile(): void {

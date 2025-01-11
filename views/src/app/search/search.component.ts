@@ -67,7 +67,9 @@ export class SearchComponent {
       },
 
       error: (_error) => {
-        this.toastr.error("It was not possible to load books","Ops! Something happened!");
+        this.toastr.error("It was not possible to load books","Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     })
   };

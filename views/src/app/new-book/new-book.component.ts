@@ -50,11 +50,15 @@ export class NewBookComponent {
         this.router.navigate([`/book/${res.id}/view`]);
 
 
-        this.toastr.success(`Book ${res.name} was created with success!`, "Success!");
+        this.toastr.success(`Book ${res.name} was created with success!`, "Success!", {
+          "closeButton": true,
+        });
       },
 
       error: (_error) => {
-        this.toastr.error("An error occurred when creating book.", "Ops! Something happened!");
+        this.toastr.error("An error occurred when creating book.", "Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     })
   };

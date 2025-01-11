@@ -112,12 +112,16 @@ export class MenuComponent {
 
     this.http.delete(url, { body: { id: id } }).subscribe({
       next: () => {
-        this.toastr.success(this.menuType + " was deleted with success!","Success!");
+        this.toastr.success(this.menuType + " was deleted with success!","Success!", {
+          "closeButton": true,
+        });
         this.callback();
       },
 
       error: (_error) => {
-        this.toastr.error("It was not possible to delete " + this.menuType,"Ops! Something happened!");
+        this.toastr.error("It was not possible to delete " + this.menuType,"Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     });
   };

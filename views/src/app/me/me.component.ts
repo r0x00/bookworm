@@ -66,14 +66,33 @@ export class MeComponent {
         this.meForm.get('email')?.setValue(this.me?.email ?? '');
       },
       error: (_error) => {
-        this.toastr.error("It was not possible to your profile.","Ops! Something happened!");
+        this.toastr.error("It was not possible to your profile.","Ops! Something happened!", {
+          "closeButton": true,
+        });
         this.router.navigate(['/']);
       }
     });
   };
 
   update(): void {
+    if(this.meForm.invalid) return;
 
+    this.http.patch('/api/me', this.meForm.value).subscribe({
+
+      next: (res: any) => {
+        console.log('update', res);
+        this.toastr.success("Your profile was updated with success!","Success!", {
+          "closeButton": true,
+        });
+        console.log('update', res);
+      },
+
+      error: (_error) => {
+        this.toastr.error("It was not possible to update your profile: " + _error.error, "Ops! Something happened!", {
+          "closeButton": true,
+        });
+      }
+    });
   };
 
   loadBooks(type: string): void {
@@ -98,7 +117,9 @@ export class MeComponent {
         });
       },
       error: (_error) => {
-        this.toastr.error("It was not possible to load books","Ops! Something happened!");
+        this.toastr.error("It was not possible to load books","Ops! Something happened!", {
+          "closeButton": true,
+        });
       }
     });
   };
